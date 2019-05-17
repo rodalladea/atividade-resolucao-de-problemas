@@ -7,6 +7,7 @@ package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade;
 
 import java.io.Serializable;
 import java.security.Timestamp;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,8 +36,8 @@ public class Aula implements Serializable {
     @Id @GeneratedValue
     private Long id;
     
-    @Temporal (TemporalType.TIMESTAMP)
-    private Timestamp data;
+    @Temporal (TemporalType.DATE)
+    private Date data;
     
     @ManyToMany
     private List<Aluno> alunosPresente;

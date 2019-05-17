@@ -7,6 +7,7 @@ package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade;
 
 import java.io.Serializable;
 import java.security.Timestamp;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -32,9 +33,9 @@ public class SemestreAcademico implements Serializable {
     @Id @GeneratedValue
     private Long id;
     
-    @Temporal (TemporalType.TIMESTAMP)
-    private Timestamp dataInicio;
+    @Temporal (TemporalType.DATE)
+    private Date dataInicio;
     
-    @Temporal (TemporalType.TIMESTAMP)
-    private Timestamp dataFinal;
+    @Temporal (TemporalType.DATE)
+    private Date dataFinal;
 }

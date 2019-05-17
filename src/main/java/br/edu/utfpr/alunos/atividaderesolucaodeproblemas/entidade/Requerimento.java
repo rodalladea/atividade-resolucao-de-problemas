@@ -7,6 +7,7 @@ package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade;
 
 import java.io.Serializable;
 import java.security.Timestamp;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,11 +36,11 @@ public class Requerimento implements Serializable {
     @Id @GeneratedValue
     private Long id;
     
-    @Temporal (TemporalType.TIMESTAMP)
-    private Timestamp dataInicio;
+    @Temporal (TemporalType.DATE)
+    private Date dataInicio;
     
-    @Temporal (TemporalType.TIMESTAMP)
-    private Timestamp dataFim;
+    @Temporal (TemporalType.DATE)
+    private Date dataFim;
     
     @ManyToOne
     private Professor professor;
