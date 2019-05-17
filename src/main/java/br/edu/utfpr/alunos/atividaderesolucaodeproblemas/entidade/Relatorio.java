@@ -7,10 +7,10 @@ package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.ElementCollection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -21,7 +21,7 @@ public class Relatorio implements Serializable {
     @Id @GeneratedValue
     private Long id;
     
-    @ElementCollection
+    @OneToMany
     private List<Professor> professores;
     
     @ManyToOne
