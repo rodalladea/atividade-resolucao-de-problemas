@@ -36,6 +36,7 @@ public class Aula implements Serializable {
     @Id @GeneratedValue
     private Long id;
     
+    //Tem que arrumar para conseguir colocar data e hora    
     @Temporal (TemporalType.DATE)
     private Date data;
     

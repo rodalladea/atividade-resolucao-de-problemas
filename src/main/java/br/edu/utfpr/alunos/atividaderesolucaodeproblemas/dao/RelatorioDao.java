@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao;
 
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Relatorio;
 import org.springframework.data.jpa.repository.JpaRepository;

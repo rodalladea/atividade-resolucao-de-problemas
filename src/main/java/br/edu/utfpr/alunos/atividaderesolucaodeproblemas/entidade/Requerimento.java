@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.security.Timestamp;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -48,7 +49,7 @@ public class Requerimento implements Serializable {
     @ManyToOne
     private Chefia chefia;
     
-    @OneToMany
+    @ElementCollection
     private List<Aula> aulasReposicao;
     
     private boolean aprovado;

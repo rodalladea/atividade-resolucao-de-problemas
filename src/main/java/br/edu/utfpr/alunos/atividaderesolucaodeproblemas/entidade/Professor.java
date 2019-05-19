@@ -30,6 +30,6 @@ public class Professor extends Pessoa implements Serializable {
     private int faltas;
     private String departamento;
     
-    @OneToMany
-    private List<Requerimento> requesicaoReposicaoAula;
+//    @OneToMany
+//    private List<Requerimento> requesicaoReposicaoAula;
 }

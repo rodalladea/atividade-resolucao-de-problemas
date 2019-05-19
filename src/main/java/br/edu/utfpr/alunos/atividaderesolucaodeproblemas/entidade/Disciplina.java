@@ -37,7 +37,7 @@ public class Disciplina implements Serializable {
     @ManyToOne
     private SemestreAcademico semestre;
     
-    @OneToMany
-    private List<Aula> aulas;
+//    @OneToMany
+//    private List<Aula> aulas;
     
 }

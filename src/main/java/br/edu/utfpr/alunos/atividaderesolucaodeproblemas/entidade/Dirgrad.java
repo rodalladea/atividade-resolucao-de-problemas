@@ -30,6 +30,6 @@ public class Dirgrad {
     @Id @GeneratedValue
     private Long id;
     
-    @OneToMany   
-    private List<Relatorio> relatoriosRecebidos;
+//    @OneToMany   
+//    private List<Relatorio> relatoriosRecebidos;
 }
