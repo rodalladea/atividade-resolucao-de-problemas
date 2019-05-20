@@ -37,8 +37,8 @@ public class Aula implements Serializable {
     private Long id;
     
     //Tem que arrumar para conseguir colocar data e hora    
-    @Temporal (TemporalType.DATE)
-    private Date data;
+    @Temporal(TemporalType.TIMESTAMP)   //timestamp é a precisão do campo declarado
+    private java.util.Date data;
     
     @ManyToMany
     private List<Aluno> alunosPresente;
