@@ -11,4 +11,8 @@ package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle;
  */
 public class DirgradControle {
     
+    //As funções não precisam ser exatamente essas, mas são essas as ações tomadas pelo dirgrad
+    
+    public void registraProvidencia() {};
+    
 }

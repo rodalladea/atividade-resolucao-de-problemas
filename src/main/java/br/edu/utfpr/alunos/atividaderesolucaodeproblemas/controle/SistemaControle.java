@@ -5,18 +5,13 @@
  */
 package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle;
 
+
 /**
  *
  * @author rodrigo
  */
-public class ChefiaControle {
+public class SistemaControle {
     
-    //As funções não precisam ser exatamente essas, mas são essas as ações tomadas pela chefia
-    
-    public void estabelecerPlano() {};
-    
-    public void aprovarPlano() {};
-    
-    public void relatorioDirgrad() {};
+    public void verificaFalta() {};    
     
 }

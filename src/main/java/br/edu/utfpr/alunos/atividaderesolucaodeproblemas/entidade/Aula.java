@@ -55,4 +55,7 @@ public class Aula implements Serializable {
     @Enumerated (EnumType.STRING)
     private Estados estado;
     
+    @Enumerated (EnumType.STRING)
+    private Tipo tipo;
+    
 }
