@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -52,5 +54,16 @@ public class Requerimento implements Serializable {
     @ElementCollection
     private List<Aula> aulasReposicao;
     
+    @ElementCollection
+    private List<Aluno> listaAnuencia;
+    //Forma que a aula sera feita: presencial ou não presencial
+    @Enumerated (EnumType.STRING)
+    private Formas forma;
+    //Tipo de requerimento é reposição de aula
+    @Enumerated (EnumType.STRING)
+    private Tipo tipo;
+    
+    //porcentagem de alunos do total que concordaram com a reposição
+    private double porcentagemAnuencia;
     private boolean aprovado;
 }
