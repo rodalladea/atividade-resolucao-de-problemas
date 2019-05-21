@@ -39,5 +39,9 @@ public class Relatorio implements Serializable {
     @ManyToOne
     private Chefia chefia;
     
+    @ManyToOne
+    private Dirgrad dirgrad;
+    
     private String observacao;
+    private String providencia;
 }

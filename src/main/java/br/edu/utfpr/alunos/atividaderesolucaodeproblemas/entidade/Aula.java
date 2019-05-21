@@ -6,10 +6,11 @@
 package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade;
 
 import java.io.Serializable;
-import java.security.Timestamp;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -38,14 +39,20 @@ public class Aula implements Serializable {
     
     //Tem que arrumar para conseguir colocar data e hora    
     @Temporal(TemporalType.TIMESTAMP)   //timestamp é a precisão do campo declarado
-    private java.util.Date data;
+    private Date dataHora;
     
-    @ManyToMany
+    @ManyToMany (mappedBy = "aulas")
     private List<Aluno> alunosPresente;
     
     @ManyToOne
     private Disciplina disciplina;
     
-    private boolean aulaDada;
+    @Enumerated (EnumType.STRING)
+    private Formas forma;
+    
+    private String conteudo;
+    
+    @Enumerated (EnumType.STRING)
+    private Estados estado;
     
 }

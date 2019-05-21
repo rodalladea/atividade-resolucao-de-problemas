@@ -9,7 +9,7 @@ public class AtividadeResolucaoDeProblemasApplication implements CommandLineRunn
     
     
     public static void main(String[] args) {
-            SpringApplication.run(AtividadeResolucaoDeProblemasApplication.class, args);
+        SpringApplication.run(AtividadeResolucaoDeProblemasApplication.class, args);
     }
 
     @Override
