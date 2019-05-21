@@ -51,6 +51,10 @@ public class Requerimento implements Serializable {
     @ManyToOne
     private Chefia chefia;
     
+    //As aulas que ira deixar de lecionar
+    @ElementCollection
+    private List<Aula> aulasFaltantes;
+    
     @ElementCollection
     private List<Aula> aulasReposicao;
     
