@@ -38,4 +38,6 @@ public class SemestreAcademico implements Serializable {
     
     @Temporal (TemporalType.DATE)
     private Date dataFinal;
+
+    private int cargaHoraria;
 }

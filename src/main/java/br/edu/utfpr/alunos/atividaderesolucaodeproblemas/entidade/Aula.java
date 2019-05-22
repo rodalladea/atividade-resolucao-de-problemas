@@ -38,8 +38,7 @@ public class Aula implements Serializable {
     @Id @GeneratedValue
     private Long id;
     
-    //Tem que arrumar para conseguir colocar data e hora    
-    @Temporal(TemporalType.DATE)   //timestamp é a precisão do campo declarado
+    @Temporal(TemporalType.DATE)
     private Date dataHora;
     
     @ElementCollection
