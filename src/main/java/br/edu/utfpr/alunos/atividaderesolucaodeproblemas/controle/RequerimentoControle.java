@@ -20,34 +20,31 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author rodrigo
  */
 
-@Service
 public class RequerimentoControle extends CrudTemplate<Requerimento> {
     
     @Autowired
     private RequerimentoDao requerimentoDao;
     
     @Override
-    public void salva(Requerimento requerimento) {
-        requerimentoDao.save(requerimento);
+    public void salva(Requerimento entidade) {
+        requerimentoDao.save(entidade);
     }
     
     @Override
-    public void exclui(Requerimento requerimento) {
-        requerimentoDao.delete(requerimento);
+    public void exclui(Requerimento entidade) {
+        requerimentoDao.delete(entidade);
     }
     
     @Override
     public void atualiza(Requerimento entidade) {
         this.exclui(requerimentoDao.findById(entidade.getId()).get());
-        
-        requerimentoDao.save(entidade);
+        this.salva(entidade);
     }
 
     @Override

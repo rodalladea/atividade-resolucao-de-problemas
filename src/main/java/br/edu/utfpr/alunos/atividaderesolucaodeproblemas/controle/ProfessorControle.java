@@ -24,23 +24,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author rodrigo
  */
 
-@Service
 public class ProfessorControle extends CrudTemplate<Professor> {
     
     @Autowired
     private ProfessorDao professorDao;
     
-    private final AulaControle aulaControle = new AulaControle();
-    private final RequerimentoControle requerimentoControle = new RequerimentoControle();
-    private final ChefiaControle chefiaControle = new ChefiaControle();
-    private final AlunoControle alunoControle = new AlunoControle();
     
     @Override
     public void salva(Professor entidade) {
@@ -81,23 +75,23 @@ public class ProfessorControle extends CrudTemplate<Professor> {
                                     Falta falta) throws ParseException {
         
         //Descobre aulas que ira faltar em uma determinado disciplina
-        List<Aula> aulasFaltantes = aulaControle.getAulasFaltantes(dataInicio, dataFim, professor, disciplina);
+        List<Aula> aulasFaltantes = Factory.aulaControle.getAulasFaltantes(dataInicio, dataFim, professor, disciplina);
         //Quantidade de dias que ira faltar
         int quantDias = (int) (((((dataFim.getTime() - dataInicio.getTime())/1000)/60)/60)/24);
         //Qual é a chefia do professor
-        Chefia chefia = chefiaControle.getChefiaByProfessor(professor);
+        Chefia chefia = Factory.chefiaControle.getChefiaByProfessor(professor);
         
         //Se quantidade manor que 15 dias o professor define o plano de aula para reposição
         //Caso contrario a chefia define
         if (quantDias <= 15 && falta.equals(Falta.PREVISTO)) {
             
-            requerimentoControle.salva(dataInicio, dataFim, professor, chefia, disciplina,
+            Factory.requerimentoControle.salva(dataInicio, dataFim, professor, chefia, disciplina,
                     aulasFaltantes, null, null, Tipo.MENOR_15, Status.INCOMPLETO, 
                     falta, 0, false);
             
         } else {
             
-            requerimentoControle.salva(dataInicio, dataFim, professor, chefia, disciplina,
+            Factory.requerimentoControle.salva(dataInicio, dataFim, professor, chefia, disciplina,
                     aulasFaltantes, null, null, Tipo.MAIOR_15, Status.COMPLETO, 
                     falta, 0, false);
             
@@ -113,7 +107,7 @@ public class ProfessorControle extends CrudTemplate<Professor> {
         
         requerimento.setAulasFaltantes(aulasReposicao);
         
-        requerimentoControle.atualiza(requerimento);
+        Factory.requerimentoControle.atualiza(requerimento);
     }
     
     public void realizaAnuencia(Requerimento requerimento) {
@@ -136,7 +130,7 @@ public class ProfessorControle extends CrudTemplate<Professor> {
         requerimento.setPorcentagemAnuencia(porcentagemAnuencia);
         requerimento.setStatus(Status.COMPLETO);
         
-        requerimentoControle.atualiza(requerimento);
+        Factory.requerimentoControle.atualiza(requerimento);
     }
     
     public void geraPlanoAula(List<Aula> aulasFaltantes, 
@@ -148,7 +142,7 @@ public class ProfessorControle extends CrudTemplate<Professor> {
 
         //Define o plano de aulas
         for (int i = 0; i < aulasFaltantes.size(); i++) {
-            Aula aula = aulaControle.geraAula(dateFormat.parse(dataAula),
+            Aula aula = Factory.aulaControle.geraAula(dateFormat.parse(dataAula),
                     null, 
                     aulasFaltantes.get(i).getDisciplina(),
                     Formas.PRESENCIAL, 
@@ -167,7 +161,7 @@ public class ProfessorControle extends CrudTemplate<Professor> {
         aula.setAlunosPresente(realizaChamada(aula));
         aula.setEstado(Estados.FEITA);
         
-        aulaControle.atualiza(aula);
+        Factory.aulaControle.atualiza(aula);
     }
     
     public List<Aluno> realizaChamada(Aula aula) {
@@ -183,9 +177,9 @@ public class ProfessorControle extends CrudTemplate<Professor> {
                 
                 presente.add(aluno);
                 
-                aluno.setPorcentagemPresenca((double) (aulaControle.getAulasComAluno(aluno).size()
-                                            /aulaControle.getAulasDisciplina(aula.getDisciplina()).size()) * 100);
-                alunoControle.atualiza(aluno);
+                aluno.setPorcentagemPresenca((double) (Factory.aulaControle.getAulasComAluno(aluno).size()
+                                            /Factory.aulaControle.getAulasDisciplina(aula.getDisciplina()).size()) * 100);
+                Factory.alunoControle.atualiza(aluno);
             }
         }
         

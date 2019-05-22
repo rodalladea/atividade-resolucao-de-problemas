@@ -21,13 +21,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author rodrigo
  */
-@Service
+
 public class AulaControle extends CrudTemplate<Aula>{
     
     @Autowired
@@ -54,8 +53,11 @@ public class AulaControle extends CrudTemplate<Aula>{
     @Override
     protected void atualiza(Aula entidade) {
         this.exclui(entidade);
-        
-        aulaDao.save(entidade);
+        try {
+            this.salva(entidade);
+        } catch (ExceptionMaxDia ex) {
+            Logger.getLogger(ex.getMessage());
+        }
     }
 
     @Override

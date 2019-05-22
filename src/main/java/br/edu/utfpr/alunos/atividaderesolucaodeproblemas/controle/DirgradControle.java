@@ -11,20 +11,17 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Relatorio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author rodrigo
  */
 
-@Service
 public class DirgradControle extends CrudTemplate<Dirgrad> {
     
     @Autowired
     private DirgradDao dirgradDao;
     
-    private final RelatorioControle relatorioControle = new RelatorioControle();
     
     @Override
     protected void salva(Dirgrad entidade) {
@@ -51,6 +48,6 @@ public class DirgradControle extends CrudTemplate<Dirgrad> {
         relatorio.setObservacao(observacao);
         relatorio.setProvidencia(providencia);
         
-        relatorioControle.salva(relatorio);
+        Factory.relatorioControle.salva(relatorio);
     }
 }

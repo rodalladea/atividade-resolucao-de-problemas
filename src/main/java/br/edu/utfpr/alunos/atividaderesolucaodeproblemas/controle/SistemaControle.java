@@ -6,6 +6,7 @@
 package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle;
 
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Aula;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Estados;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
 import java.util.Date;
 import java.util.List;
@@ -16,23 +17,35 @@ import java.util.List;
  * @author rodrigo
  */
 public class SistemaControle {
-    private final AulaControle aulaControle = new AulaControle();
-    private final ProfessorControle professorControle = new ProfessorControle();
+    
     
     public void verificaFaltaProfessor() {
-        List<Aula> aulas = aulaControle.getAulasEsquecidas();
+        List<Aula> aulas = Factory.aulaControle.getAulasEsquecidas();
         Date agora = new Date();
         
         aulas.stream().forEach(a -> {
             int dias = (int) (((((agora.getTime() - a.getDataHora().getTime())/1000)/60)/60)/24);
             
-            if (dias > 3) {
-                Professor professor = professorControle.getProfessorById(a.getProfessor());
+            if (dias > 3 && a.getEstado().equals(Estados.NAO_FEITA)) {
+                Professor professor = Factory.professorControle.getProfessorById(a.getProfessor());
                 professor.setFaltas(professor.getFaltas() + 1);
                 
-                professorControle.atualiza(professor);
+                Factory.professorControle.atualiza(professor);
             }
         });
-    }    
+    }
+    
+    public void verificaAulasNaoFeitas() {
+        List<Aula> aulas = Factory.aulaControle.listaTodos();
+        Date agora = new Date();
+        
+        aulas.stream().forEach(a -> {
+            if (agora.after(a.getDataHora()) && a.getEstado().equals(Estados.EM_ABERTO)) {
+                a.setEstado(Estados.NAO_FEITA);
+                Factory.aulaControle.atualiza(a);
+            }
+            
+        });
+    }
     
 }

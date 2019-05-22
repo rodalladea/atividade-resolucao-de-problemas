@@ -11,7 +11,6 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Aula;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Chefia;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Dirgrad;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Falta;
-import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Formas;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Requerimento;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Status;
@@ -20,26 +19,18 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 
 /**
  *
  * @author rodrigo
  */
 
-@Service
 public class ChefiaControle extends CrudTemplate<Chefia> {
 
     
     @Autowired
     private ChefiaDao chefiaDao;
     
-    
-    private final AulaControle aulaControle = new AulaControle();
-    private final ProfessorControle professorControle = new ProfessorControle();
-    private final RequerimentoControle requerimentoControle = new RequerimentoControle();
-    private final RelatorioControle relatorioControle = new RelatorioControle();
     
     @Override
     protected void salva(Chefia entidade) {
@@ -76,17 +67,17 @@ public class ChefiaControle extends CrudTemplate<Chefia> {
             avaliar(requerimento);
             
         } else {
-            requerimentoControle.exclui(requerimento);
+            Factory.requerimentoControle.exclui(requerimento);
             
             List<Aula> aulasReposicao = new ArrayList<Aula>();
             
             //fazer esse metodo no sistemaControle
-            professorControle.geraPlanoAula(requerimento.getAulasFaltantes(), aulasReposicao, professor); 
+            Factory.professorControle.geraPlanoAula(requerimento.getAulasFaltantes(), aulasReposicao, professor); 
             
             requerimento.setAulasReposicao(aulasReposicao);
             requerimento.setStatus(Status.ESPERANDO_ANUENCIA);
             
-            requerimentoControle.salva(requerimento);
+            Factory.requerimentoControle.salva(requerimento);
         }
 
     }
@@ -96,16 +87,16 @@ public class ChefiaControle extends CrudTemplate<Chefia> {
         
         if (aprovacao) {
             requerimento.setAprovado(true);
-            aulaControle.salvaTodas(requerimento.getAulasReposicao());
+            Factory.aulaControle.salvaTodas(requerimento.getAulasReposicao());
         } else {
             requerimento.setAprovado(false);
         }
     }
     
     public void relatorioDirgrad(Dirgrad dirgrad, Chefia chefia) {
-        List<Professor> professoresFaltantes = professorControle.listaProfessoresFaltantes();
+        List<Professor> professoresFaltantes = Factory.professorControle.listaProfessoresFaltantes();
         
-        relatorioControle.salva(professoresFaltantes, dirgrad, chefia);
+        Factory.relatorioControle.salva(professoresFaltantes, dirgrad, chefia);
     }  
     
 }

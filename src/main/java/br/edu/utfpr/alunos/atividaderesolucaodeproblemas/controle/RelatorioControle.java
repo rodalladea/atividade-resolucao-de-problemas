@@ -13,14 +13,12 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Relatorio;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author rodrigo
  */
 
-@Service
 public class RelatorioControle extends CrudTemplate<Relatorio> {
     
     @Autowired

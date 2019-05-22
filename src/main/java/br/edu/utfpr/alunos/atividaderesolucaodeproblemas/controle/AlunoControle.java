@@ -8,14 +8,12 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.AlunoDao;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Aluno;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author rodrigo
  */
 
-@Service
 public class AlunoControle extends CrudTemplate<Aluno> {
     
     @Autowired
@@ -34,7 +32,6 @@ public class AlunoControle extends CrudTemplate<Aluno> {
     @Override
     protected void atualiza(Aluno entidade) {
         this.exclui(entidade);
-        
         this.salva(entidade);
     }
 
