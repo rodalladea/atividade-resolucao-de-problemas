@@ -11,6 +11,7 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Dirgrad;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Relatorio;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,16 @@ public class RelatorioControle {
                 .observacao(null).providencia(null).build();
         
         relatorioDao.save(relatorio);
+    }
+    
+    public void salva(Relatorio relatorio) {
+               
+        relatorioDao.save(relatorio);
+    }
+    
+    public List<Relatorio> getNaoRespondido() {
+        return relatorioDao.findAll().stream()
+                .filter(r -> r.getProvidencia().trim().isEmpty())
+                .collect(Collectors.toList());
     }
 }

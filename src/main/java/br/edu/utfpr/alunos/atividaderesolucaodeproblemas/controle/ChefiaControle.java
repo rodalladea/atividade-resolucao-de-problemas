@@ -6,26 +6,19 @@
 package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle;
 
 
-import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.AulaDao;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.ChefiaDao;
-import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.ProfessorDao;
-import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.RelatorioDao;
-import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.RequerimentoDao;
-import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.SemestreAcademicoDao;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Aula;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Chefia;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Dirgrad;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Falta;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Formas;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
-import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Relatorio;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Requerimento;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Status;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Tipo;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
