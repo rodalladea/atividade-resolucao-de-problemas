@@ -1,2 +1,2 @@
-# Atividade Resolucao de Problemas
+# Atividade Resolução de Problemas
 Topico 3 - Reposição de aulas
