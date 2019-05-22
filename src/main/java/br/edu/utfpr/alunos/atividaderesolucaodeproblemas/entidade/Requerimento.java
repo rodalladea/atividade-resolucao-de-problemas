@@ -54,7 +54,7 @@ public class Requerimento implements Serializable {
     @ManyToOne
     private Disciplina disciplina;
     
-    //As aulas que ira deixar de lecionar
+    //As aulas que ira deixar ou deixou de lecionar
     @ElementCollection
     private List<Aula> aulasFaltantes;
     
@@ -69,6 +69,12 @@ public class Requerimento implements Serializable {
     //Tipo de requerimento é reposição de aula
     @Enumerated (EnumType.STRING)
     private Tipo tipo;
+    
+    @Enumerated (EnumType.STRING)
+    private Status status;
+    
+    @Enumerated (EnumType.STRING)
+    private Falta falta;
     
     //porcentagem de alunos do total que concordaram com a reposição
     private double porcentagemAnuencia;
