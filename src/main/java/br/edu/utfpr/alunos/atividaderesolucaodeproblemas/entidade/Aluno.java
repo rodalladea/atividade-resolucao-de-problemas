@@ -29,5 +29,5 @@ public class Aluno extends Pessoa implements Serializable {
     private Double porcentagemPresenca;
     
     @ManyToMany
-    private List<Aula> aulas;
+    private List<Disciplina> disciplinas;
 }

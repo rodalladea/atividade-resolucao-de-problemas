@@ -8,6 +8,7 @@ package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -37,11 +38,10 @@ public class Aula implements Serializable {
     @Id @GeneratedValue
     private Long id;
     
-    //Tem que arrumar para conseguir colocar data e hora    
     @Temporal(TemporalType.DATE)
     private Date dataHora;
     
-    @ManyToMany (mappedBy = "aulas")
+    @ElementCollection
     private List<Aluno> alunosPresente;
     
     @ManyToOne
@@ -57,5 +57,8 @@ public class Aula implements Serializable {
     
     @Enumerated (EnumType.STRING)
     private Tipo tipo;
+    
+    @ManyToOne
+    private Professor professor;
     
 }

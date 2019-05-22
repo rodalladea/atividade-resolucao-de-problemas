@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle;
 
+
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.ProfessorDao;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.RelatorioDao;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.RequerimentoDao;
@@ -12,13 +13,26 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.SemestreAcademicoDa
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 /**
  *
  * @author rodrigo
  */
+
+@Service
 public class ChefiaControle {
 
-    //As funções não precisam ser exatamente essas, mas são essas as ações tomadas pela chefia
+    
+    @Autowired
+    private ChefiaDao chefiaDao;
+    
+    public Chefia getChefiaByProfessor(Professor professor) {
+        return chefiaDao.findAll().stream()
+                .filter(c -> c.getDepartamento().equalsIgnoreCase(professor.getDepartamento()))
+                .findAny()
+                .get();
+    }
+//==========================================================================================
 
     private final ProfessorDao professorDao;
     private final RequerimentoDao requerimentoDao;
