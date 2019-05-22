@@ -28,6 +28,10 @@ public class AulaControle {
     
     @Autowired
     private AulaDao aulaDao;
+    
+    public void salvaTodas(List<Aula> aulas) {
+        aulaDao.saveAll(aulas);
+    }
         
     public List<Aula> getAulasFaltantes(Date dataInicio, Date dataFim, Professor professor, Disciplina disciplina) {
         List<Aula> listAulas = aulaDao.findAll().stream()

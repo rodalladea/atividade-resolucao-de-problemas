@@ -5,19 +5,24 @@
  */
 package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle;
 
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.ProfessorDao;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Aula;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Chefia;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Aluno;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Disciplina;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Estados;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Falta;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Formas;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Status;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Tipo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,15 +33,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProfessorControle {
     
+    @Autowired
+    private ProfessorDao professorDao;
+    
     private final AulaControle aulaControle = new AulaControle();
     private final RequerimentoControle requerimentoControle = new RequerimentoControle();
     private final ChefiaControle chefiaControle = new ChefiaControle();
+    
+    public List<Professor> listaProfessoresFaltantes() {
+        return professorDao.findAll().stream()
+                .filter(p -> p.getFaltas() > 0)
+                .collect(Collectors.toList());
+    }
     
     //Paramentros que serão inseridos pelo usuário professor
     public void requisitarReposicao(Date dataInicio,
                                     Date dataFim,
                                     Professor professor,
-                                    Disciplina disciplina) throws ParseException {
+                                    Disciplina disciplina,
+                                    Falta falta) throws ParseException {
         
         //Descobre aulas que ira faltar em uma determinado disciplina
         List<Aula> aulasFaltantes = aulaControle.getAulasFaltantes(dataInicio, dataFim, professor, disciplina);
@@ -46,7 +61,7 @@ public class ProfessorControle {
         Chefia chefia = chefiaControle.getChefiaByProfessor(professor);
         
         //Se quantidade manor que 15 dias o professor define o plano de aula para reposição
-        if (quantDias <= 15) {
+        if (quantDias <= 15 && falta.equals(Falta.PREVISTO)) {
             List<Aula> aulasReposicao = new ArrayList<>();
             List<Aluno> listaAnuencia = new ArrayList<>();
             
@@ -64,15 +79,16 @@ public class ProfessorControle {
             double porcentagemAnuencia = (listaAnuencia.size()/disciplina.getAlunosMatriculados().size()) * 100;
             
             //Gera requerimento com o plano feito
-            requerimentoControle.salvaRequerimento(dataInicio, dataFim, professor, chefia, disciplina,
+            requerimentoControle.salva(dataInicio, dataFim, professor, chefia, disciplina,
                     aulasFaltantes, aulasReposicao, listaAnuencia, Formas.PRESENCIAL, 
-                    Tipo.REPOSIÇÃO, porcentagemAnuencia, false);
+                    Tipo.MENOR_15, Status.COMPLETO, falta, porcentagemAnuencia, false);
             
         } else {
-            //Gera requerimento com plano para o dirgrad fazer, pois faltara mais de 15 dias
-            requerimentoControle.salvaRequerimento(dataInicio, dataFim, professor, chefia, disciplina,
-                    aulasFaltantes, null, null, null, 
-                    null, 0, false);
+                //Gera requerimento com plano para o dirgrad fazer, pois faltara mais de 15 dias
+                requerimentoControle.salva(dataInicio, dataFim, professor, chefia, disciplina,
+                        aulasFaltantes, null, null, null, 
+                        Tipo.MAIOR_15, Status.COMPLETO, falta, 0, false);
+            
         }
         
     }
