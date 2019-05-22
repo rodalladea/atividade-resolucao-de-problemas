@@ -14,6 +14,7 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Disciplina;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Estados;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Falta;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Formas;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Requerimento;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Status;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Tipo;
 import java.text.ParseException;
@@ -31,7 +32,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class ProfessorControle {
+public class ProfessorControle extends CrudTemplate<Professor> {
     
     @Autowired
     private ProfessorDao professorDao;
@@ -39,6 +40,32 @@ public class ProfessorControle {
     private final AulaControle aulaControle = new AulaControle();
     private final RequerimentoControle requerimentoControle = new RequerimentoControle();
     private final ChefiaControle chefiaControle = new ChefiaControle();
+    private final AlunoControle alunoControle = new AlunoControle();
+    
+    @Override
+    public void salva(Professor entidade) {
+        professorDao.save(entidade);
+    }
+
+    @Override
+    public void exclui(Professor entidade) {
+        professorDao.delete(entidade);
+    }
+
+    @Override
+    public void atualiza(Professor entidade) {
+        this.exclui(entidade);
+        this.salva(entidade);
+    }
+
+    @Override
+    public List<Professor> listaTodos() {
+        return professorDao.findAll();
+    }
+    
+    public Professor getProfessorById(Professor professor) {
+        return professorDao.findById(professor.getId()).get();
+    }
     
     public List<Professor> listaProfessoresFaltantes() {
         return professorDao.findAll().stream()
@@ -47,7 +74,7 @@ public class ProfessorControle {
     }
     
     //Paramentros que serão inseridos pelo usuário professor
-    public void requisitarReposicao(Date dataInicio,
+    public void criaRequerimento(Date dataInicio,
                                     Date dataFim,
                                     Professor professor,
                                     Disciplina disciplina,
@@ -61,36 +88,55 @@ public class ProfessorControle {
         Chefia chefia = chefiaControle.getChefiaByProfessor(professor);
         
         //Se quantidade manor que 15 dias o professor define o plano de aula para reposição
+        //Caso contrario a chefia define
         if (quantDias <= 15 && falta.equals(Falta.PREVISTO)) {
-            List<Aula> aulasReposicao = new ArrayList<>();
-            List<Aluno> listaAnuencia = new ArrayList<>();
             
-            //Define o plano de aulas
-            geraPlanoAula(aulasFaltantes, aulasReposicao, professor);
-            
-            //Verifica anuencia
-            for (int i = 0; i < disciplina.getAlunosMatriculados().size(); i ++) {
-                if (true && disciplina.getAlunosMatriculados().get(i).getPorcentagemPresenca() > 75) { //Pode ser tanto true quanto false, o professor vai selecionando
-                    listaAnuencia.add(disciplina.getAlunosMatriculados().get(i));
-                }
-            }
-            
-            //Calcula porcentagem de anuencia
-            double porcentagemAnuencia = (listaAnuencia.size()/disciplina.getAlunosMatriculados().size()) * 100;
-            
-            //Gera requerimento com o plano feito
             requerimentoControle.salva(dataInicio, dataFim, professor, chefia, disciplina,
-                    aulasFaltantes, aulasReposicao, listaAnuencia, Formas.PRESENCIAL, 
-                    Tipo.MENOR_15, Status.COMPLETO, falta, porcentagemAnuencia, false);
+                    aulasFaltantes, null, null, Tipo.MENOR_15, Status.INCOMPLETO, 
+                    falta, 0, false);
             
         } else {
-                //Gera requerimento com plano para o dirgrad fazer, pois faltara mais de 15 dias
-                requerimentoControle.salva(dataInicio, dataFim, professor, chefia, disciplina,
-                        aulasFaltantes, null, null, null, 
-                        Tipo.MAIOR_15, Status.COMPLETO, falta, 0, false);
+            
+            requerimentoControle.salva(dataInicio, dataFim, professor, chefia, disciplina,
+                    aulasFaltantes, null, null, Tipo.MAIOR_15, Status.COMPLETO, 
+                    falta, 0, false);
             
         }
         
+    }
+    
+    public void insereAulasRequerimento(Requerimento requerimento) throws ParseException {
+        List<Aula> aulasReposicao = new ArrayList<>();
+
+        //Define o plano de aulas
+        geraPlanoAula(requerimento.getAulasFaltantes(), aulasReposicao, requerimento.getProfessor());
+        
+        requerimento.setAulasFaltantes(aulasReposicao);
+        
+        requerimentoControle.atualiza(requerimento);
+    }
+    
+    public void realizaAnuencia(Requerimento requerimento) {
+        
+        List<Aluno> listaAnuencia = new ArrayList<>();
+        
+        //Verifica anuencia
+        for (int i = 0; i < requerimento.getDisciplina().getAlunosMatriculados().size(); i ++) {
+            boolean concorda = true; //Pode ser tanto true quanto false, o professor vai selecionando
+            if (concorda && requerimento.getDisciplina().getAlunosMatriculados().get(i).getPorcentagemPresenca() > 75) { 
+                listaAnuencia.add(requerimento.getDisciplina().getAlunosMatriculados().get(i));
+            }
+        }
+
+        //Calcula porcentagem de anuencia
+        double porcentagemAnuencia = (listaAnuencia.size()/
+                                        requerimento.getDisciplina().getAlunosMatriculados().size()) * 100;
+        
+        requerimento.setListaAnuencia(listaAnuencia);
+        requerimento.setPorcentagemAnuencia(porcentagemAnuencia);
+        requerimento.setStatus(Status.COMPLETO);
+        
+        requerimentoControle.atualiza(requerimento);
     }
     
     public void geraPlanoAula(List<Aula> aulasFaltantes, 
@@ -114,6 +160,36 @@ public class ProfessorControle {
             aulasReposicao.add(aula);
         }
         
+    }
+    
+    public void realizaAula(Aula aula) {
+        
+        aula.setAlunosPresente(realizaChamada(aula));
+        aula.setEstado(Estados.FEITA);
+        
+        aulaControle.atualiza(aula);
+    }
+    
+    public List<Aluno> realizaChamada(Aula aula) {
+        List<Aluno> total = aula.getDisciplina().getAlunosMatriculados();
+        List<Aluno> presente = new ArrayList<>();
+        Aluno aluno = null;
+        
+        for (int i = 0; i < total.size(); i++) {
+            boolean responde = true; //entrada no sistema pelo usuario entao pode ser false
+            
+            if (responde) {
+                aluno = total.get(i);
+                
+                presente.add(aluno);
+                
+                aluno.setPorcentagemPresenca((double) (aulaControle.getAulasComAluno(aluno).size()
+                                            /aulaControle.getAulasDisciplina(aula.getDisciplina()).size()) * 100);
+                alunoControle.atualiza(aluno);
+            }
+        }
+        
+        return presente;
     }
     
 }

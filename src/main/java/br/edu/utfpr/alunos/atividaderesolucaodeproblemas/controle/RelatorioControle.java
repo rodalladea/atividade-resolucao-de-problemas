@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class RelatorioControle {
+public class RelatorioControle extends CrudTemplate<Relatorio> {
     
     @Autowired
     private RelatorioDao relatorioDao;
@@ -33,9 +33,25 @@ public class RelatorioControle {
         relatorioDao.save(relatorio);
     }
     
+    @Override
     public void salva(Relatorio relatorio) {
-               
         relatorioDao.save(relatorio);
+    }
+    
+    @Override
+    protected void exclui(Relatorio entidade) {
+        relatorioDao.delete(entidade);
+    }
+
+    @Override
+    protected void atualiza(Relatorio entidade) {
+        this.exclui(entidade);
+        this.salva(entidade);
+    }
+
+    @Override
+    protected List<Relatorio> listaTodos() {
+        return relatorioDao.findAll();
     }
     
     public List<Relatorio> getNaoRespondido() {

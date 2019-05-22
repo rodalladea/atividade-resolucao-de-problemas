@@ -63,9 +63,7 @@ public class Requerimento implements Serializable {
     
     @ElementCollection
     private List<Aluno> listaAnuencia;
-    //Forma que a aula sera feita: presencial ou não presencial
-    @Enumerated (EnumType.STRING)
-    private Formas forma;
+    
     //Tipo de requerimento é reposição de aula
     @Enumerated (EnumType.STRING)
     private Tipo tipo;

@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class ChefiaControle {
+public class ChefiaControle extends CrudTemplate<Chefia> {
 
     
     @Autowired
@@ -41,6 +41,27 @@ public class ChefiaControle {
     private final RequerimentoControle requerimentoControle = new RequerimentoControle();
     private final RelatorioControle relatorioControle = new RelatorioControle();
     
+    @Override
+    protected void salva(Chefia entidade) {
+        chefiaDao.save(entidade);
+    }
+
+    @Override
+    protected void exclui(Chefia entidade) {
+        chefiaDao.delete(entidade);
+    }
+
+    @Override
+    protected void atualiza(Chefia entidade) {
+        this.exclui(entidade);
+        this.salva(entidade);
+    }
+
+    @Override
+    protected List<Chefia> listaTodos() {
+        return chefiaDao.findAll();
+    }
+    
     public Chefia getChefiaByProfessor(Professor professor) {
         return chefiaDao.findAll().stream()
                 .filter(c -> c.getDepartamento().equalsIgnoreCase(professor.getDepartamento()))
@@ -48,7 +69,7 @@ public class ChefiaControle {
                 .get();
     }
 
-    // Método chamado pelo professor que solicita um plano (ou não em caso de ausência imprevista)
+    // Método chamado pelo professor que solicita um plano
     public void estabelecerPlano(Professor professor, Requerimento requerimento) throws ParseException{
         
         if(requerimento.getTipo().equals(Tipo.MENOR_15) && requerimento.getFalta().equals(Falta.PREVISTO)) {
@@ -58,11 +79,11 @@ public class ChefiaControle {
             requerimentoControle.exclui(requerimento);
             
             List<Aula> aulasReposicao = new ArrayList<Aula>();
-                    
-            professorControle.geraPlanoAula(requerimento.getAulasFaltantes(), aulasReposicao, professor); //fazer esse metodo no sistemaControle
+            
+            //fazer esse metodo no sistemaControle
+            professorControle.geraPlanoAula(requerimento.getAulasFaltantes(), aulasReposicao, professor); 
             
             requerimento.setAulasReposicao(aulasReposicao);
-            defineForma(requerimento);
             requerimento.setStatus(Status.ESPERANDO_ANUENCIA);
             
             requerimentoControle.salva(requerimento);
@@ -75,28 +96,16 @@ public class ChefiaControle {
         
         if (aprovacao) {
             requerimento.setAprovado(true);
-            aulaControle.salvaTodas(requerimento.getAulasReposicao()); //adicionar no aula controle
+            aulaControle.salvaTodas(requerimento.getAulasReposicao());
         } else {
             requerimento.setAprovado(false);
         }
     }
     
-    public void defineForma(Requerimento requerimento) {
-        String forma = "presencial"; //pego do usuario
-        
-        if (forma.equalsIgnoreCase("presencial")) {
-            requerimento.setForma(Formas.PRESENCIAL);
-        } else {
-            requerimento.setForma(Formas.NAO_PRESENCIAL);
-        }
-    }
-    
     public void relatorioDirgrad(Dirgrad dirgrad, Chefia chefia) {
-        List<Professor> professoresFaltanates = professorControle.listaProfessoresFaltantes();
+        List<Professor> professoresFaltantes = professorControle.listaProfessoresFaltantes();
         
-        relatorioControle.salva(professoresFaltanates, dirgrad, chefia);
-    };
-    
-    
+        relatorioControle.salva(professoresFaltantes, dirgrad, chefia);
+    }  
     
 }

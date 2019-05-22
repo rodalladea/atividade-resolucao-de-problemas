@@ -28,10 +28,32 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class RequerimentoControle {
+public class RequerimentoControle extends CrudTemplate<Requerimento> {
     
     @Autowired
     private RequerimentoDao requerimentoDao;
+    
+    @Override
+    public void salva(Requerimento requerimento) {
+        requerimentoDao.save(requerimento);
+    }
+    
+    @Override
+    public void exclui(Requerimento requerimento) {
+        requerimentoDao.delete(requerimento);
+    }
+    
+    @Override
+    public void atualiza(Requerimento entidade) {
+        this.exclui(requerimentoDao.findById(entidade.getId()).get());
+        
+        requerimentoDao.save(entidade);
+    }
+
+    @Override
+    public List<Requerimento> listaTodos() {
+        return requerimentoDao.findAll();
+    }
     
     public void salva(Date dataInicio,
                     Date dataFim,
@@ -41,7 +63,6 @@ public class RequerimentoControle {
                     List<Aula> aulasFaltantes,
                     List<Aula> aulasReposicao,
                     List<Aluno> listaAnuencia,
-                    Formas forma,
                     Tipo tipo,
                     Status status,
                     Falta falta,
@@ -49,24 +70,31 @@ public class RequerimentoControle {
                     boolean aprovado) {
         requerimentoDao.save(Requerimento.builder().dataInicio(dataInicio).dataFim(dataFim).professor(professor)
                 .chefia(chefia).aulasFaltantes(aulasFaltantes).aulasReposicao(aulasReposicao)
-                .listaAnuencia(listaAnuencia).forma(forma).tipo(tipo).status(status).falta(falta)
+                .listaAnuencia(listaAnuencia).tipo(tipo).status(status).falta(falta)
                 .porcentagemAnuencia(porcentagemAnuencia).aprovado(aprovado).disciplina(disciplina).build());
     }
     
-    public void salva(Requerimento requerimento) {
-        requerimentoDao.save(requerimento);
-    }
-    
-    public void exclui(Requerimento requerimento) {
-        requerimentoDao.delete(requerimento);
-    }
-    
-    //Plano realizado pelo dirgrad no requerimento
-    public List<Requerimento> verificaPlanoDirgrad(Professor professor, Disciplina disciplina) {
-        List<Requerimento> listaRequerimentos = requerimentoDao.findAll().stream()
-                .filter(r -> r.getStatus().equals(Tipo.MAIOR_15))
+    //Plano realizado pela chefia no requerimento precisa ser realizado anuencia
+    public List<Requerimento> requerimentosChefia(Professor professor, Disciplina disciplina) {
+        List<Requerimento> listaRequerimentos = this.listaTodos().stream()
+                .filter(r -> (r.getTipo().equals(Tipo.MAIOR_15) &&
+                        r.getProfessor().equals(professor)) &&
+                        (r.getStatus().equals(Status.ESPERANDO_ANUENCIA) ||
+                         !r.isAprovado()))
                 .collect(Collectors.toList());
         
         return listaRequerimentos;
     }
+    
+    //Requerimentos que não foram finalizados precisam ser completos tanto para inserção de aulas quanto anuencia
+    public List<Requerimento> requerimentosIncompleto(Professor professor, Disciplina disciplina) {
+        List<Requerimento> listaRequerimentos = this.listaTodos().stream()
+                .filter(r -> r.getStatus().equals(Status.INCOMPLETO) &&
+                        r.getProfessor().equals(professor))
+                .collect(Collectors.toList());
+        
+        return listaRequerimentos;
+    }
+
+    
 }
