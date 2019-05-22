@@ -38,7 +38,7 @@ public class Aula implements Serializable {
     private Long id;
     
     //Tem que arrumar para conseguir colocar data e hora    
-    @Temporal(TemporalType.TIMESTAMP)   //timestamp é a precisão do campo declarado
+    @Temporal(TemporalType.DATE)
     private Date dataHora;
     
     @ManyToMany (mappedBy = "aulas")
