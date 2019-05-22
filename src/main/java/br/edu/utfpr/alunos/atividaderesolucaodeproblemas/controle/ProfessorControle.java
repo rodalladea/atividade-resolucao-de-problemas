@@ -80,10 +80,14 @@ public class ProfessorControle extends CrudTemplate<Professor> {
         int quantDias = (int) (((((dataFim.getTime() - dataInicio.getTime())/1000)/60)/60)/24);
         //Qual é a chefia do professor
         Chefia chefia = Factory.chefiaControle.getChefiaByProfessor(professor);
+        Date dataFinalSemestre = Factory.semestreAcademicoControle
+                                .getSemestreAcademicoById(disciplina.getSemestre()).getDataFinal();
         
         //Se quantidade manor que 15 dias o professor define o plano de aula para reposição
         //Caso contrario a chefia define
-        if (quantDias <= 15 && falta.equals(Falta.PREVISTO)) {
+        if (quantDias <= 15 && falta.equals(Falta.PREVISTO) && 
+                (dataFim.getTime() < 
+                dataFinalSemestre.getTime())) {
             
             Factory.requerimentoControle.salva(dataInicio, dataFim, professor, chefia, disciplina,
                     aulasFaltantes, null, null, Tipo.MENOR_15, Status.INCOMPLETO, 

@@ -40,4 +40,8 @@ public class SemestreAcademicoControle extends CrudTemplate<SemestreAcademico> {
     public List<SemestreAcademico> listaTodos() {
         return semestreAcademicoDao.findAll();
     }
+    
+    public SemestreAcademico getSemestreAcademicoById(SemestreAcademico semestreAcademico) {
+        return semestreAcademicoDao.findById(semestreAcademico.getId()).get();
+    }
 }

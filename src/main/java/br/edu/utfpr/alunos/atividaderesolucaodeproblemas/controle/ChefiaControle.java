@@ -10,7 +10,6 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.ChefiaDao;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Aula;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Chefia;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Dirgrad;
-import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Falta;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Requerimento;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Status;
@@ -63,7 +62,7 @@ public class ChefiaControle extends CrudTemplate<Chefia> {
     // Método chamado pelo professor que solicita um plano
     public void estabelecerPlano(Professor professor, Requerimento requerimento) throws ParseException{
         
-        if(requerimento.getTipo().equals(Tipo.MENOR_15) && requerimento.getFalta().equals(Falta.PREVISTO)) {
+        if(requerimento.getTipo().equals(Tipo.MENOR_15)) {
             avaliar(requerimento);
             
         } else {

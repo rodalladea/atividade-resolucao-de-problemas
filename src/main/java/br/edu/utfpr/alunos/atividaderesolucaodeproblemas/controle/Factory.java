@@ -16,4 +16,5 @@ public class Factory {
     public static final AlunoControle alunoControle = new AlunoControle();
     public static final RelatorioControle relatorioControle = new RelatorioControle();
     public static final ProfessorControle professorControle = new ProfessorControle();
+    public static final SemestreAcademicoControle semestreAcademicoControle = new SemestreAcademicoControle();
 }
