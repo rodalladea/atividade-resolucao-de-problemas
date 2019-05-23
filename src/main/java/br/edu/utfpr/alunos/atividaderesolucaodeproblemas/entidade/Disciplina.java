@@ -42,6 +42,8 @@ public class Disciplina implements Serializable {
     
     @ManyToMany (mappedBy = "disciplinas")
     private List<Aluno> alunosMatriculados;
+
+    //codigo comentado
     
 //    @OneToMany
 //    private List<Aula> aulas;

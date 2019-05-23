@@ -10,5 +10,5 @@ package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade;
  * @author rodrigo
  */
 public enum Tipo {
-    REPOSIÇÃO, NORMAL, MAIOR_15, MENOR_15;
+    REPOSIÇÃO, NORMAL, MAIOR_15, MENOR_15; //tipo normal nunca é usado
 }

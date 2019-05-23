@@ -6,7 +6,7 @@
 package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade;
 
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.security.Timestamp; //importacoes nao utilizadas
 import java.util.Date;
 import java.util.List;
 import javax.persistence.ElementCollection;

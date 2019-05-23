@@ -52,7 +52,7 @@ public class RelatorioControle extends CrudTemplate<Relatorio> {
         return relatorioDao.findAll();
     }
     
-    public List<Relatorio> getNaoRespondido() {
+    public List<Relatorio> getNaoRespondido() { //método nunca utilizado
         return relatorioDao.findAll().stream()
                 .filter(r -> r.getProvidencia().trim().isEmpty())
                 .collect(Collectors.toList());

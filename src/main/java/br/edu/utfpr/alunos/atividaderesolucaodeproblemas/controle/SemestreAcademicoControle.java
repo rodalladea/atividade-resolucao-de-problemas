@@ -21,12 +21,12 @@ public class SemestreAcademicoControle extends CrudTemplate<SemestreAcademico> {
     private SemestreAcademicoDao semestreAcademicoDao;
     
     @Override
-    public void salva(SemestreAcademico entidade) {
+    public void salva(SemestreAcademico entidade) { //poderia ser um método protected
         semestreAcademicoDao.save(entidade);
     }
     
     @Override
-    public void exclui(SemestreAcademico entidade) {
+    public void exclui(SemestreAcademico entidade) { //poderia ser um método protected
         semestreAcademicoDao.delete(entidade);
     }
     
@@ -42,6 +42,6 @@ public class SemestreAcademicoControle extends CrudTemplate<SemestreAcademico> {
     }
     
     public SemestreAcademico getSemestreAcademicoById(SemestreAcademico semestreAcademico) {
-        return semestreAcademicoDao.findById(semestreAcademico.getId()).get();
+        return semestreAcademicoDao.findById(semestreAcademico.getId()).get(); //antes do get teria que verificar se existe com o isPresent()
     }
 }
