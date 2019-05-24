@@ -9,7 +9,10 @@ package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle;
  *
  * @author rodrigo
  */
+
+//adicionar um construtor privado, porque o construtor publico nao sera utilizado, ja que essa classe não foi feita para ser instanciada
 public class Factory {
+
     public static final AulaControle aulaControle = new AulaControle();
     public static final RequerimentoControle requerimentoControle = new RequerimentoControle();
     public static final ChefiaControle chefiaControle = new ChefiaControle();

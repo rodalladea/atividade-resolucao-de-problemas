@@ -11,6 +11,7 @@ public class AtividadeResolucaoDeProblemasApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		//método de teste vazio
 	}
 
 }

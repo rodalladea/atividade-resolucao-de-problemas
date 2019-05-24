@@ -56,7 +56,7 @@ public class ChefiaControle extends CrudTemplate<Chefia> {
         return chefiaDao.findAll().stream()
                 .filter(c -> c.getDepartamento().equalsIgnoreCase(professor.getDepartamento()))
                 .findAny()
-                .get();
+                .get(); //antes do get teria que verificar se existe com o isPresent()
     }
 
     // Método chamado pelo professor que solicita um plano
@@ -68,7 +68,7 @@ public class ChefiaControle extends CrudTemplate<Chefia> {
         } else {
             Factory.requerimentoControle.exclui(requerimento);
             
-            List<Aula> aulasReposicao = new ArrayList<Aula>();
+            List<Aula> aulasReposicao = new ArrayList<Aula>(); //não era necessário colocar Aula no new ArrayList<>
             
             //fazer esse metodo no sistemaControle
             Factory.professorControle.geraPlanoAula(requerimento.getAulasFaltantes(), aulasReposicao, professor); 
@@ -81,10 +81,10 @@ public class ChefiaControle extends CrudTemplate<Chefia> {
 
     }
 
-    public void avaliar(Requerimento requerimento){
+    public void avaliar(Requerimento requerimento){ //poderia ser um método privado já que só é chamado dentro dessa classe
         boolean aprovacao = true; //dado recebido do usuario
         
-        if (aprovacao) {
+        if (aprovacao) { //a variavel foi inicializada como true, então sempre vai entrar nesse if e nunca no else
             requerimento.setAprovado(true);
             Factory.aulaControle.salvaTodas(requerimento.getAulasReposicao());
         } else {

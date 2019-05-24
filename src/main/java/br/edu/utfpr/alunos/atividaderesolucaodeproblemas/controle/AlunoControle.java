@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author rodrigo
  */
 
+//poderia mudar essa classe pra abstrata e fazer ela implementar o AlunoDAO
+    //isso poderia ser feito em todas as classes de controle
 public class AlunoControle extends CrudTemplate<Aluno> {
     
     @Autowired

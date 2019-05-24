@@ -17,7 +17,7 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.excecoes.ExceptionMaxDi
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
+import java.util.logging.Level; //importação não utilizada
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +66,7 @@ public class AulaControle extends CrudTemplate<Aula>{
     }
     
     public void salvaTodas(List<Aula> aulas) {
-        aulas.stream().forEach(a -> {
+        aulas.stream().forEach(a -> { //poderia usar somente o forEach sem o stream()
             try {
                 this.salva(a);
             } catch (ExceptionMaxDia ex) {
@@ -103,7 +103,7 @@ public class AulaControle extends CrudTemplate<Aula>{
                 .collect(Collectors.toList());
     }
     
-    public List<Aula> getAulasDoDia(Date data, Disciplina disciplina) {
+    public List<Aula> getAulasDoDia(Date data, Disciplina disciplina) { //poderia ser um método privado já que só é utilizado dentro dessa classe
         return this.listaTodos().stream()
                 .filter(a -> a.getDataHora().equals(data) &&
                         a.getDisciplina().equals(disciplina))
@@ -117,7 +117,7 @@ public class AulaControle extends CrudTemplate<Aula>{
                         String conteudo, 
                         Estados estado, 
                         Tipo tipo, 
-                        Professor professor) {
+                        Professor professor) { //método tem muitos parâmetros (8 no total)
         
         return Aula.builder().dataHora(dataHora).alunosPresente(alunosPresente).disciplina(disciplina)
                 .forma(forma).conteudo(conteudo).estado(estado).tipo(tipo).professor(professor).build();

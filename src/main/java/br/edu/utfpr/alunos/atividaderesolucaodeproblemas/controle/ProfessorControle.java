@@ -37,12 +37,12 @@ public class ProfessorControle extends CrudTemplate<Professor> {
     
     
     @Override
-    public void salva(Professor entidade) {
+    public void salva(Professor entidade) { //poderia ser um método protected
         professorDao.save(entidade);
     }
 
     @Override
-    public void exclui(Professor entidade) {
+    public void exclui(Professor entidade) { //poderia ser um método protected
         professorDao.delete(entidade);
     }
 
@@ -58,7 +58,7 @@ public class ProfessorControle extends CrudTemplate<Professor> {
     }
     
     public Professor getProfessorById(Professor professor) {
-        return professorDao.findById(professor.getId()).get();
+        return professorDao.findById(professor.getId()).get(); //antes do get teria que verificar se existe com o isPresent()
     }
     
     public List<Professor> listaProfessoresFaltantes() {
@@ -68,11 +68,11 @@ public class ProfessorControle extends CrudTemplate<Professor> {
     }
     
     //Paramentros que serão inseridos pelo usuário professor
-    public void criaRequerimento(Date dataInicio,
+    public void criaRequerimento(Date dataInicio, //método nunca utilizado
                                     Date dataFim,
                                     Professor professor,
                                     Disciplina disciplina,
-                                    Falta falta) throws ParseException {
+                                    Falta falta) throws ParseException { //exceção nunca disparada
         
         //Descobre aulas que ira faltar em uma determinado disciplina
         List<Aula> aulasFaltantes = Factory.aulaControle.getAulasFaltantes(dataInicio, dataFim, professor, disciplina);
@@ -121,13 +121,14 @@ public class ProfessorControle extends CrudTemplate<Professor> {
         //Verifica anuencia
         for (int i = 0; i < requerimento.getDisciplina().getAlunosMatriculados().size(); i ++) {
             boolean concorda = true; //Pode ser tanto true quanto false, o professor vai selecionando
+            //a variavel é inicializada como true, então sempre vai entrar no if
             if (concorda && requerimento.getDisciplina().getAlunosMatriculados().get(i).getPorcentagemPresenca() > 75) { 
                 listaAnuencia.add(requerimento.getDisciplina().getAlunosMatriculados().get(i));
             }
         }
 
         //Calcula porcentagem de anuencia
-        double porcentagemAnuencia = (listaAnuencia.size()/
+        double porcentagemAnuencia = (listaAnuencia.size()/ //divisao de inteiros cujo resultado sera usado como float, e isso pode gerar erros
                                         requerimento.getDisciplina().getAlunosMatriculados().size()) * 100;
         
         requerimento.setListaAnuencia(listaAnuencia);
@@ -136,7 +137,9 @@ public class ProfessorControle extends CrudTemplate<Professor> {
         
         Factory.requerimentoControle.atualiza(requerimento);
     }
-    
+
+    //esse método não deveria ter dados fictícios, e sim a estrutura do método de gerar plano de aula
+    //os dados fictícios poderiam ser usados em um teste desse método, mas não aqui
     public void geraPlanoAula(List<Aula> aulasFaltantes, 
                                     List<Aula> aulasReposicao, Professor professor) throws ParseException {
         //variaveis aleatorias criadas para inserção, que no caso o usuario iria inserindo
@@ -145,7 +148,7 @@ public class ProfessorControle extends CrudTemplate<Professor> {
         String conteudo = "conteudo";
 
         //Define o plano de aulas
-        for (int i = 0; i < aulasFaltantes.size(); i++) {
+        for (int i = 0; i < aulasFaltantes.size(); i++) { //poderia usar forEach no lugar do for
             Aula aula = Factory.aulaControle.geraAula(dateFormat.parse(dataAula),
                     null, 
                     aulasFaltantes.get(i).getDisciplina(),
@@ -168,14 +171,14 @@ public class ProfessorControle extends CrudTemplate<Professor> {
         Factory.aulaControle.atualiza(aula);
     }
     
-    public List<Aluno> realizaChamada(Aula aula) {
+    public List<Aluno> realizaChamada(Aula aula) { //poderia ser um método privado, já que só é chamado dentro dessa classe
         List<Aluno> total = aula.getDisciplina().getAlunosMatriculados();
         List<Aluno> presente = new ArrayList<>();
-        Aluno aluno = null;
+        Aluno aluno = null; //inicializacao redundante, ja que a variavel nao vai ser lida antes de seu valor ser sobrescrito
         
-        for (int i = 0; i < total.size(); i++) {
+        for (int i = 0; i < total.size(); i++) { //poderia usar forEach no lugar do for
             boolean responde = true; //entrada no sistema pelo usuario entao pode ser false
-            
+            //variavel inicializada como true, entao sempre vai entrar no if
             if (responde) {
                 aluno = total.get(i);
                 

@@ -5,11 +5,11 @@
  */
 package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade;
 
-import java.util.List;
+import java.util.List;  //importacao nao utilizada
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToMany; //importacao nao utilizada
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -16,14 +16,15 @@ import java.util.List;
  *
  * @author rodrigo
  */
-public class SistemaControle {
+public class SistemaControle { //poderia ser uma classe privada
+
+    //não era necessária a criação dessa classe
     
-    
-    public void verificaFaltaProfessor() {
+    public void verificaFaltaProfessor() { //esse método poderia estar dentro de ProfessorControle
         List<Aula> aulas = Factory.aulaControle.getAulasEsquecidas();
         Date agora = new Date();
         
-        aulas.stream().forEach(a -> {
+        aulas.stream().forEach(a -> { //poderia usar somente o forEach sem o stream()
             int dias = (int) (((((agora.getTime() - a.getDataHora().getTime())/1000)/60)/60)/24);
             
             if (dias > 3 && a.getEstado().equals(Estados.NAO_FEITA)) {
@@ -35,11 +36,11 @@ public class SistemaControle {
         });
     }
     
-    public void verificaAulasNaoFeitas() {
+    public void verificaAulasNaoFeitas() { //esse método deveria estar dentro de AulaControle
         List<Aula> aulas = Factory.aulaControle.listaTodos();
         Date agora = new Date();
         
-        aulas.stream().forEach(a -> {
+        aulas.stream().forEach(a -> { //poderia usar somente o forEach sem o stream()
             if (agora.after(a.getDataHora()) && a.getEstado().equals(Estados.EM_ABERTO)) {
                 a.setEstado(Estados.NAO_FEITA);
                 Factory.aulaControle.atualiza(a);

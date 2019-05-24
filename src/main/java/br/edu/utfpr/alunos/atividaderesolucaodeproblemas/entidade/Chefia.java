@@ -27,6 +27,8 @@ import lombok.NoArgsConstructor;
 public class Chefia extends Pessoa implements Serializable{
     
     private String departamento;
+
+    //codigo comentado
 //    
 //    @OneToMany
 //    private List<Requerimento> avaliacaoReposicaoAula;
