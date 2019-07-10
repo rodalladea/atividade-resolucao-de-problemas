@@ -29,12 +29,6 @@ public class DisciplinaControle extends CrudTemplate<Disciplina> {
     public void exclui(Disciplina entidade) {
         disciplinaDao.delete(entidade);
     }
-    
-    @Override
-    public void atualiza(Disciplina entidade) {
-        this.exclui(entidade);
-        this.salva(entidade);
-    }
 
     @Override
     public List<Disciplina> listaTodos() {

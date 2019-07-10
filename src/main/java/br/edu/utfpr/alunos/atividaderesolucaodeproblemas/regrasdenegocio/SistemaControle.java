@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle;
+package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.regrasdenegocio;
 
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle.Factory;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Aula;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Estados;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.excecoes.ExceptionMaxDia;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -18,6 +22,7 @@ import java.util.List;
  */
 public class SistemaControle {
     
+    //É do sistema essas funções porque o sistema fica verificando isso
     
     public void verificaFaltaProfessor() {
         List<Aula> aulas = Factory.aulaControle.getAulasEsquecidas();
@@ -30,7 +35,7 @@ public class SistemaControle {
                 Professor professor = Factory.professorControle.getProfessorById(a.getProfessor());
                 professor.setFaltas(professor.getFaltas() + 1);
                 
-                Factory.professorControle.atualiza(professor);
+                Factory.professorControle.salva(professor);
             }
         });
     }
@@ -42,7 +47,11 @@ public class SistemaControle {
         aulas.stream().forEach(a -> {
             if (agora.after(a.getDataHora()) && a.getEstado().equals(Estados.EM_ABERTO)) {
                 a.setEstado(Estados.NAO_FEITA);
-                Factory.aulaControle.atualiza(a);
+                try {
+                    Factory.aulaControle.salva(a);
+                } catch (ExceptionMaxDia ex) {
+                    Logger.getLogger(SistemaControle.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             
         });

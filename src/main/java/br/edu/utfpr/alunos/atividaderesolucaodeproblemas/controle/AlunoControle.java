@@ -20,23 +20,17 @@ public class AlunoControle extends CrudTemplate<Aluno> {
     private AlunoDao alunoDao;
     
     @Override
-    protected void salva(Aluno entidade) {
+    public void salva(Aluno entidade) {
         alunoDao.save(entidade);
     }
 
     @Override
-    protected void exclui(Aluno entidade) {
+    public void exclui(Aluno entidade) {
         alunoDao.delete(entidade);
     }
 
     @Override
-    protected void atualiza(Aluno entidade) {
-        this.exclui(entidade);
-        this.salva(entidade);
-    }
-
-    @Override
-    protected List<Aluno> listaTodos() {
+    public List<Aluno> listaTodos() {
         return alunoDao.findAll();
     }
     

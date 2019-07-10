@@ -32,23 +32,17 @@ public class ChefiaControle extends CrudTemplate<Chefia> {
     
     
     @Override
-    protected void salva(Chefia entidade) {
+    public void salva(Chefia entidade) {
         chefiaDao.save(entidade);
     }
 
     @Override
-    protected void exclui(Chefia entidade) {
+    public void exclui(Chefia entidade) {
         chefiaDao.delete(entidade);
     }
 
     @Override
-    protected void atualiza(Chefia entidade) {
-        this.exclui(entidade);
-        this.salva(entidade);
-    }
-
-    @Override
-    protected List<Chefia> listaTodos() {
+    public List<Chefia> listaTodos() {
         return chefiaDao.findAll();
     }
     
@@ -57,45 +51,5 @@ public class ChefiaControle extends CrudTemplate<Chefia> {
                 .filter(c -> c.getDepartamento().equalsIgnoreCase(professor.getDepartamento()))
                 .findAny()
                 .get();
-    }
-
-    // Método chamado pelo professor que solicita um plano
-    public void estabelecerPlano(Professor professor, Requerimento requerimento) throws ParseException{
-        
-        if(requerimento.getTipo().equals(Tipo.MENOR_15)) {
-            avaliar(requerimento);
-            
-        } else {
-            Factory.requerimentoControle.exclui(requerimento);
-            
-            List<Aula> aulasReposicao = new ArrayList<Aula>();
-            
-            //fazer esse metodo no sistemaControle
-            Factory.professorControle.geraPlanoAula(requerimento.getAulasFaltantes(), aulasReposicao, professor); 
-            
-            requerimento.setAulasReposicao(aulasReposicao);
-            requerimento.setStatus(Status.ESPERANDO_ANUENCIA);
-            
-            Factory.requerimentoControle.salva(requerimento);
-        }
-
-    }
-
-    public void avaliar(Requerimento requerimento){
-        boolean aprovacao = true; //dado recebido do usuario
-        
-        if (aprovacao) {
-            requerimento.setAprovado(true);
-            Factory.aulaControle.salvaTodas(requerimento.getAulasReposicao());
-        } else {
-            requerimento.setAprovado(false);
-        }
-    }
-    
-    public void relatorioDirgrad(Dirgrad dirgrad, Chefia chefia) {
-        List<Professor> professoresFaltantes = Factory.professorControle.listaProfessoresFaltantes();
-        
-        Factory.relatorioControle.salva(professoresFaltantes, dirgrad, chefia);
-    }  
-    
+    }    
 }

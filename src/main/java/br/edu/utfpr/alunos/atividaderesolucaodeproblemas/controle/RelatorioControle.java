@@ -37,18 +37,12 @@ public class RelatorioControle extends CrudTemplate<Relatorio> {
     }
     
     @Override
-    protected void exclui(Relatorio entidade) {
+    public void exclui(Relatorio entidade) {
         relatorioDao.delete(entidade);
     }
 
     @Override
-    protected void atualiza(Relatorio entidade) {
-        this.exclui(entidade);
-        this.salva(entidade);
-    }
-
-    @Override
-    protected List<Relatorio> listaTodos() {
+    public List<Relatorio> listaTodos() {
         return relatorioDao.findAll();
     }
     

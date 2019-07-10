@@ -11,7 +11,6 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Aula;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Chefia;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Disciplina;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Falta;
-import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Formas;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Requerimento;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Status;
@@ -39,12 +38,6 @@ public class RequerimentoControle extends CrudTemplate<Requerimento> {
     @Override
     public void exclui(Requerimento entidade) {
         requerimentoDao.delete(entidade);
-    }
-    
-    @Override
-    public void atualiza(Requerimento entidade) {
-        this.exclui(requerimentoDao.findById(entidade.getId()).get());
-        this.salva(entidade);
     }
 
     @Override

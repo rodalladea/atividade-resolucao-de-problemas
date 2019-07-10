@@ -29,12 +29,6 @@ public class SemestreAcademicoControle extends CrudTemplate<SemestreAcademico> {
     public void exclui(SemestreAcademico entidade) {
         semestreAcademicoDao.delete(entidade);
     }
-    
-    @Override
-    public void atualiza(SemestreAcademico entidade) {
-        this.exclui(entidade);
-        this.salva(entidade);
-    }
 
     @Override
     public List<SemestreAcademico> listaTodos() {

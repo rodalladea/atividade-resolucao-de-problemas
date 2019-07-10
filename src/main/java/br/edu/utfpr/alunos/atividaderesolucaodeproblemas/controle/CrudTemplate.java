@@ -15,6 +15,5 @@ public abstract class CrudTemplate<T> {
     
     protected abstract void salva(T entidade) throws Exception;
     protected abstract void exclui(T entidade);
-    protected abstract void atualiza(T entidade);
     protected abstract List<T> listaTodos();
 }

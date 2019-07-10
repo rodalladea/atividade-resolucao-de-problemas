@@ -33,7 +33,7 @@ public class AulaControle extends CrudTemplate<Aula>{
     private AulaDao aulaDao;
     
     @Override
-    protected void salva(Aula entidade) throws ExceptionMaxDia {
+    public void salva(Aula entidade) throws ExceptionMaxDia {
         
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyy hh:mm:ss");
         Date dia = entidade.getDataHora();
@@ -46,22 +46,12 @@ public class AulaControle extends CrudTemplate<Aula>{
     }
 
     @Override
-    protected void exclui(Aula entidade) {
+    public void exclui(Aula entidade) {
         aulaDao.delete(entidade);
     }
 
     @Override
-    protected void atualiza(Aula entidade) {
-        this.exclui(entidade);
-        try {
-            this.salva(entidade);
-        } catch (ExceptionMaxDia ex) {
-            Logger.getLogger(ex.getMessage());
-        }
-    }
-
-    @Override
-    protected List<Aula> listaTodos() {
+    public List<Aula> listaTodos() {
         return aulaDao.findAll();
     }
     

@@ -24,30 +24,17 @@ public class DirgradControle extends CrudTemplate<Dirgrad> {
     
     
     @Override
-    protected void salva(Dirgrad entidade) {
+    public void salva(Dirgrad entidade) {
         dirgradDao.save(entidade);
     }
 
     @Override
-    protected void exclui(Dirgrad entidade) {
+    public void exclui(Dirgrad entidade) {
         dirgradDao.delete(entidade);
     }
 
     @Override
-    protected void atualiza(Dirgrad entidade) {
-        this.exclui(entidade);
-        this.salva(entidade);
-    }
-
-    @Override
-    protected List<Dirgrad> listaTodos() {
+    public List<Dirgrad> listaTodos() {
         return dirgradDao.findAll();
-    }
-
-    public void registraProvidencia(Relatorio relatorio, String observacao, String providencia) {
-        relatorio.setObservacao(observacao);
-        relatorio.setProvidencia(providencia);
-        
-        Factory.relatorioControle.salva(relatorio);
     }
 }
