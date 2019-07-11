@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto;
+package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.model.up;
 
-import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Disciplina;
-import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Falta;
-import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.model.down.Disciplina;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.model.down.Falta;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.model.down.Professor;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

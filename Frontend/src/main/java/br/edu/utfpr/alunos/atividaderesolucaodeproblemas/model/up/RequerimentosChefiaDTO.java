@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto;
+package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.model.up;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

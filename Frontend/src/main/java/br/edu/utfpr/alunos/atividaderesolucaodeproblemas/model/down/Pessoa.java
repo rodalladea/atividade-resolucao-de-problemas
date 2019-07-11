@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto;
+package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.model.down;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import java.io.Serializable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,12 +16,11 @@ import lombok.NoArgsConstructor;
  *
  * @author rodrigo
  */
+
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class ChefiaDTO {
+@MappedSuperclass
+public abstract class Pessoa {
     protected Long id;
     protected String nome;
-    private String departamento;
 }

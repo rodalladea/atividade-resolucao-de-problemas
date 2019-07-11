@@ -3,9 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto;
+package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.model.down;
 
+import java.io.Serializable;
+import java.security.Timestamp;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,11 +22,12 @@ import lombok.NoArgsConstructor;
  *
  * @author rodrigo
  */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SemestreAcademicoDTO {
+public class SemestreAcademico {
     private Long id;
     private Date dataInicio;
     private Date dataFinal;

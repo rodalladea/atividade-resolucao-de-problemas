@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto;
+package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.model.up;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,9 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AlunoDTO {
-    protected Long id;
-    protected String nome;
-    private Double porcentagemPresenca;
-    private List<Long> disciplinasId;
+public class DirgradProvidenciaDTO {
+    private Long relatorioId;
+    private String observacao;
+    private String providencia;
 }
