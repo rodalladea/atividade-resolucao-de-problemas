@@ -10,15 +10,16 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author rodrigo
  */
-
+@Component
 public class ProfessorControle extends CrudTemplate<Professor> {
     
-    private ProfessorDao professorDao;
+    private final ProfessorDao professorDao;
     
     @Autowired
     public ProfessorControle(ProfessorDao professorDao) {

@@ -29,22 +29,22 @@
             <div class="col">
                 <form action="/aluno/criar" method="post">
                     <div class="form-group">
+                        <label for="nome">Porcentagem de presença:</label>
+                        <input value="${(alunoAtual.nome)!}" name="nome" type="text" class="form-control" id="nome">
+                    </div>
+                    <div class="form-group">
                         <label for="porcentagemPresenca">Porcentagem de presença:</label>
                         <input value="${(alunoAtual.porcentagemPresenca)!}" name="porcentagemPresenca" type="text" class="form-control" id="porcentagemPresenca">
                     </div>
 
                     <#--  Deixei comentado por não sei se precisa  -->
                     <div class="form-group">
-                        <label for="pais">Disciplinas: </label>
-                        <select name="pais" id="pais" class="form-control">
-=                            <#list paises as pais>
-                                <option value="${pais.id}">${pais.nome}</option>
+                        <label for="disciplina">Disciplinas: </label>
+                        <select name="disciplina" id="disciplina" class="form-control">
+=                            <#list disciplinas as disciplina>
+                                <option value="${disciplina.id}">${disciplina.nome}</option>
                             </#list>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="disciplinas">Disciplina</label>
-                        <input value="${(alunoAtual.disciplinas)!}"  name="disciplinas" type="text" class="form-control" id="disciplinas">
                     </div>
 
                     <button type="submit" class="btn btn-primary">Criar aluno</button>

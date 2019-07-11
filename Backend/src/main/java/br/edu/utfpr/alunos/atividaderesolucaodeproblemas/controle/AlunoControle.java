@@ -8,15 +8,16 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.AlunoDao;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Aluno;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author rodrigo
  */
-
+@Component
 public class AlunoControle extends CrudTemplate<Aluno> {
     
-    private AlunoDao alunoDao;
+    private final AlunoDao alunoDao;
     
     @Autowired
     public AlunoControle(AlunoDao alunoDao) {

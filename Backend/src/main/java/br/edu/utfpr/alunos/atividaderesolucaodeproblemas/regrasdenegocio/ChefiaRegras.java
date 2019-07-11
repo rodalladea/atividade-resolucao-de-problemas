@@ -16,11 +16,12 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Tipo;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.springframework.stereotype.Component;
 /**
  *
  * @author rodrigo
  */
+@Component
 public class ChefiaRegras {
     // Método chamado pelo professor que solicita um plano
     public boolean estabelecerPlano(Professor professor, Requerimento requerimento) throws ParseException{

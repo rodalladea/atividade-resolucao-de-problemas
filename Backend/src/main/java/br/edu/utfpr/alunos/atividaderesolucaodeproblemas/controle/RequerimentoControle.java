@@ -19,15 +19,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author rodrigo
  */
-
+@Component
 public class RequerimentoControle extends CrudTemplate<Requerimento> {
     
-    private RequerimentoDao requerimentoDao;
+    private final RequerimentoDao requerimentoDao;
     
     @Autowired
     public RequerimentoControle(RequerimentoDao requerimentoDao) {

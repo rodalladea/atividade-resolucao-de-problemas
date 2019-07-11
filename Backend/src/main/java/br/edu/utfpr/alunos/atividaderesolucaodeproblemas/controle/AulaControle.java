@@ -20,15 +20,16 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author rodrigo
  */
-
+@Component
 public class AulaControle extends CrudTemplate<Aula>{
     
-    private AulaDao aulaDao;
+    private final AulaDao aulaDao;
     
     @Autowired
     public AulaControle(AulaDao aulaDao) {

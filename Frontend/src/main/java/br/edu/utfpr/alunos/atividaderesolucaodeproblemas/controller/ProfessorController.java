@@ -36,7 +36,7 @@ public class ProfessorController {
                         Professor[].class
                     );
 
-        data.addAttribute("professors", arrayProfessores);
+        data.addAttribute("professores", arrayProfessores);
 
         return "professor-view";
     }
@@ -108,4 +108,36 @@ public class ProfessorController {
 
         return "redirect:/professor";
     }
+
+    @GetMapping("/professor/preparacriarequerimento")
+    public String inicial(Model data) throws JsonSyntaxException, UnirestException {
+
+        Disciplina arrayDisciplinas[] = new Gson()
+                    .fromJson(
+                        Unirest
+                            .get("http://localhost:8081/servico/disciplina")
+                            .asJson()
+                            .getBody()
+                            .toString(), 
+                        Disciplina[].class
+                    );
+
+        data.addAttribute("disciplinas", arrayProfessores);
+
+        return "criarequerimento-view";
+    }
+
+    @PostMapping ("/professor/criarequerimento")
+    public String alterar (CriaRequerimentoDTO crDto) throws UnirestException {
+
+        Unirest
+            .put("http://localhost:8081/servico/professor/criarequerimento")
+            .header("Content-type", "application/json")
+            .header("accept", "application/json")
+            .body(new Gson().toJson(crDto, CriaRequerimentoDTO.class))
+            .asJson();
+
+        return "redirect:/professor";
+    }
+    
 }

@@ -23,11 +23,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author rodrigo
  */
+@Component
 public class ProfessorRegras {
         
     //Paramentros que serão inseridos pelo usuário professor

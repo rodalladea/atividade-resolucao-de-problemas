@@ -13,15 +13,16 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Relatorio;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author rodrigo
  */
-
+@Component
 public class RelatorioControle extends CrudTemplate<Relatorio> {
     
-    private RelatorioDao relatorioDao;
+    private final RelatorioDao relatorioDao;
     
     @Autowired
     public RelatorioControle(RelatorioDao relatorioDao) {

@@ -10,16 +10,17 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Dirgrad;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Relatorio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 /**
  *
  * @author rodrigo
  */
-
+@Component
 public class DirgradControle extends CrudTemplate<Dirgrad> {
     
-    private DirgradDao dirgradDao;
+    private final DirgradDao dirgradDao;
     
     @Autowired
     public DirgradControle(DirgradDao dirgradDao) {

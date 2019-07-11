@@ -103,7 +103,7 @@ public class ProfessorServico {
         return ResponseEntity.noContent().build();
     }
     
-    @GetMapping ("/servico/dirgrad/registraprovidencia")
+    @PostMapping ("/servico/professor/criarequerimento")
     public ResponseEntity registraProvidencia(@RequestBody CriaRequerimentoDTO provDto) throws ParseException {
         
         if(professorReg.criaRequerimento(provDto.getDataInicio(),

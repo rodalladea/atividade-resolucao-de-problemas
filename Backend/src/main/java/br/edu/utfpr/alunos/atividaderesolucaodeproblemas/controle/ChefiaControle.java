@@ -11,16 +11,17 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Chefia;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author rodrigo
  */
-
+@Component
 public class ChefiaControle extends CrudTemplate<Chefia> {
 
 
-    private ChefiaDao chefiaDao;
+    private final ChefiaDao chefiaDao;
     
     @Autowired
     public ChefiaControle(ChefiaDao chefiaDao) {

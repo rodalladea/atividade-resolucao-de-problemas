@@ -81,6 +81,7 @@ public class AlunoController {
             );
 
         data.addAttribute("alunoAtual", alunoExistente);
+        data.addAttribute("disciplinas", alunoExistente.getDisciplinas());
 
         Aluno arrayAlunos[] = new Gson()
         .fromJson(

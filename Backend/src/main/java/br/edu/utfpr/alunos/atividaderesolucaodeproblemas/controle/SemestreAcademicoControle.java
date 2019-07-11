@@ -9,15 +9,16 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.SemestreAcadem
 import org.springframework.beans.factory.annotation.Autowired;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.SemestreAcademicoDao;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author rodrigo
  */
-
+@Component
 public class SemestreAcademicoControle extends CrudTemplate<SemestreAcademico> {
     
-    private SemestreAcademicoDao semestreAcademicoDao;
+    private final SemestreAcademicoDao semestreAcademicoDao;
     
     @Autowired
     public SemestreAcademicoControle(SemestreAcademicoDao semestreAcademicoDao) {

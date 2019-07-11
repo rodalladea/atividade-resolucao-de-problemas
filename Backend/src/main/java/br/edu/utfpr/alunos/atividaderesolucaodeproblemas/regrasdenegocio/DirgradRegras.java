@@ -7,11 +7,13 @@ package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.regrasdenegocio;
 
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle.Factory;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Relatorio;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author rodrigo
  */
+@Component
 public class DirgradRegras {
     
     public boolean registraProvidencia(Relatorio relatorio, String observacao, String providencia) {

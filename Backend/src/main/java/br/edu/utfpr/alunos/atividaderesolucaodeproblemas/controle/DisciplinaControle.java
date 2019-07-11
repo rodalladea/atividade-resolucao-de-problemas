@@ -9,15 +9,16 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dao.DisciplinaDao;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Disciplina;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author rodrigo
  */
-
+@Component
 public class DisciplinaControle extends CrudTemplate<Disciplina> {
     
-    private DisciplinaDao disciplinaDao;
+    private final DisciplinaDao disciplinaDao;
     
     @Autowired
     public DisciplinaControle(DisciplinaDao disciplinaDao) {

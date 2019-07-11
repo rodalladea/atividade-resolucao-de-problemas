@@ -27,7 +27,7 @@ public class RequerimentoController {
     @GetMapping("/requerimento")
     public String inicial(Model data) throws JsonSyntaxException, UnirestException {
 
-        Requerimento arrayRelatorios[] = new Gson()
+        Requerimento arrayRequerimentos[] = new Gson()
                     .fromJson(
                         Unirest
                             .get("http://localhost:8081/servico/requerimento")
@@ -37,7 +37,7 @@ public class RequerimentoController {
                         Requerimento[].class
                     );
 
-        data.addAttribute("requerimentos", arrayRelatorios);
+        data.addAttribute("requerimentos", arrayRequerimentos);
 
         return "requerimento-view";
     }
