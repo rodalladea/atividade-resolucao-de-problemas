@@ -34,10 +34,18 @@
                     </div>
 
                     <#--  Deixei comentado por não sei se precisa  -->
-                    <#--  <div class="form-group">
+                    <div class="form-group">
+                        <label for="pais">Disciplinas: </label>
+                        <select name="pais" id="pais" class="form-control">
+=                            <#list paises as pais>
+                                <option value="${pais.id}">${pais.nome}</option>
+                            </#list>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="disciplinas">Disciplina</label>
                         <input value="${(alunoAtual.disciplinas)!}"  name="disciplinas" type="text" class="form-control" id="disciplinas">
-                    </div>  -->
+                    </div>
 
                     <button type="submit" class="btn btn-primary">Criar aluno</button>
                 </form>
