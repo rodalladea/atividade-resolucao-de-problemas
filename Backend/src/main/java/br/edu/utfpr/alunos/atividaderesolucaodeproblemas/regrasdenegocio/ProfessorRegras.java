@@ -31,7 +31,7 @@ import java.util.List;
 public class ProfessorRegras {
         
     //Paramentros que serão inseridos pelo usuário professor
-    public void criaRequerimento(Date dataInicio,
+    public boolean criaRequerimento(Date dataInicio,
                                     Date dataFim,
                                     Professor professor,
                                     Disciplina disciplina,
@@ -64,9 +64,11 @@ public class ProfessorRegras {
             
         }
         
+        return true;
+        
     }
     
-    public void insereAulasRequerimento(Requerimento requerimento) throws ParseException {
+    public boolean insereAulasRequerimento(Requerimento requerimento) throws ParseException {
         List<Aula> aulasReposicao = new ArrayList<>();
 
         //Define o plano de aulas
@@ -75,9 +77,11 @@ public class ProfessorRegras {
         requerimento.setAulasFaltantes(aulasReposicao);
         
         Factory.requerimentoControle.salva(requerimento);
+        
+        return true;
     }
     
-    public void realizaAnuencia(Requerimento requerimento) {
+    public boolean realizaAnuencia(Requerimento requerimento) {
         
         List<Aluno> listaAnuencia = new ArrayList<>();
         
@@ -98,9 +102,11 @@ public class ProfessorRegras {
         requerimento.setStatus(Status.COMPLETO);
         
         Factory.requerimentoControle.salva(requerimento);
+        
+        return true;
     }
     
-    public void geraPlanoAula(List<Aula> aulasFaltantes, 
+    public boolean geraPlanoAula(List<Aula> aulasFaltantes, 
                                     List<Aula> aulasReposicao, Professor professor) throws ParseException {
         //variaveis aleatorias criadas para inserção, que no caso o usuario iria inserindo
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
@@ -121,14 +127,18 @@ public class ProfessorRegras {
             aulasReposicao.add(aula);
         }
         
+        return true;
+        
     }
     
-    public void realizaAula(Aula aula) throws ExceptionMaxDia {
+    public boolean realizaAula(Aula aula) throws ExceptionMaxDia {
         
         aula.setAlunosPresente(realizaChamada(aula));
         aula.setEstado(Estados.FEITA);
         
         Factory.aulaControle.salva(aula);
+        
+        return true;
     }
     
     public List<Aluno> realizaChamada(Aula aula) {

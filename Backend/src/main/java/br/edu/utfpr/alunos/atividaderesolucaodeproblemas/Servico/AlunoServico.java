@@ -6,7 +6,11 @@
 package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.Servico;
 
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle.AlunoControle;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle.DisciplinaControle;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto.AlunoDTO;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Aluno;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Disciplina;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +29,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AlunoServico {
     private final AlunoControle alunoCon;
+    private final DisciplinaControle disciplinaCon;
     
     @Autowired
-    public AlunoServico(AlunoControle alunoCon) {
+    public AlunoServico(AlunoControle alunoCon, DisciplinaControle disciplinaCon) {
         this.alunoCon = alunoCon;
+        this.disciplinaCon = disciplinaCon;
     }
     
     @GetMapping ("/servico/aluno")
@@ -47,9 +53,22 @@ public class AlunoServico {
     }
     
     @PostMapping ("/servico/aluno")
-    public ResponseEntity<Aluno> criar(@RequestBody Aluno aluno) {
-        alunoCon.salva(aluno);
-        return ResponseEntity.status(201).body(aluno);
+    public ResponseEntity<Aluno> criar(@RequestBody AlunoDTO alunoDto) {
+        List<Disciplina> disciplinas = new ArrayList<>();
+        for(Long d : alunoDto.getDisciplinasId()) {
+            Disciplina disciplina = disciplinaCon.listaPorId(d);
+            
+            disciplinas.add(disciplina);
+        }
+        
+        Aluno a = new Aluno();
+        
+        a.setNome(alunoDto.getNome());
+        a.setPorcentagemPresenca(alunoDto.getPorcentagemPresenca());
+        a.setDisciplinas(disciplinas);
+        
+        alunoCon.salva(a);
+        return ResponseEntity.status(201).body(a);
     }
     
     @DeleteMapping ("/servico/aluno/{id}")
@@ -64,13 +83,26 @@ public class AlunoServico {
     }
     
     @PutMapping ("/servico/aluno/{id}")
-    public ResponseEntity alterar(@PathVariable Long id, @RequestBody Aluno aluno) {
+    public ResponseEntity alterar(@PathVariable Long id, @RequestBody AlunoDTO alunoDto) {
         Aluno a = alunoCon.listaPorId(id);
         if (a == null) {
             return ResponseEntity.notFound().build();
         }
         
-        alunoCon.salva(aluno);
+        List<Disciplina> disciplinas = new ArrayList<>();
+        for(Long d : alunoDto.getDisciplinasId()) {
+            Disciplina disciplina = disciplinaCon.listaPorId(d);
+            
+            disciplinas.add(disciplina);
+        }
+        
+        Aluno al = new Aluno();
+        
+        a.setNome(alunoDto.getNome());
+        a.setPorcentagemPresenca(alunoDto.getPorcentagemPresenca());
+        a.setDisciplinas(disciplinas);
+        
+        alunoCon.salva(al);
         return ResponseEntity.noContent().build();
     }
 }

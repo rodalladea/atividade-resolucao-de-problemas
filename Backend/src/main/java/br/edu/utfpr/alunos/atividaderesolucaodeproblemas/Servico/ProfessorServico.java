@@ -6,7 +6,12 @@
 package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.Servico;
 
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle.ProfessorControle;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto.CriaRequerimentoDTO;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto.ProfessorDTO;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Falta;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Professor;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.regrasdenegocio.ProfessorRegras;
+import java.text.ParseException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +30,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProfessorServico {
     private final ProfessorControle professorCon;
+    private final ProfessorRegras professorReg;
     
     @Autowired
-    public ProfessorServico(ProfessorControle professorCon) {
+    public ProfessorServico(ProfessorControle professorCon, ProfessorRegras professorReg) {
         this.professorCon = professorCon;
+        this.professorReg = professorReg;
     }
     
     @GetMapping ("/servico/professor")
@@ -57,7 +64,13 @@ public class ProfessorServico {
     }
     
     @PostMapping ("/servico/professor")
-    public ResponseEntity<Professor> criar(@RequestBody Professor professor) {
+    public ResponseEntity<Professor> criar(@RequestBody ProfessorDTO professorDto) {
+        Professor professor = new Professor();
+        
+        professor.setNome(professorDto.getNome());
+        professor.setFaltas(professorDto.getFaltas());
+        professor.setDepartamento(professorDto.getDepartamento());
+        
         professorCon.salva(professor);
         return ResponseEntity.status(201).body(professor);
     }
@@ -74,13 +87,33 @@ public class ProfessorServico {
     }
     
     @PutMapping ("/servico/professor/{id}")
-    public ResponseEntity alterar(@PathVariable Long id, @RequestBody Professor professor) {
+    public ResponseEntity alterar(@PathVariable Long id, @RequestBody ProfessorDTO professorDto) {
         Professor p = professorCon.listaPorId(id);
         if (p == null) {
             return ResponseEntity.notFound().build();
         }
         
+        Professor professor = new Professor();
+        
+        professor.setNome(professorDto.getNome());
+        professor.setFaltas(professorDto.getFaltas());
+        professor.setDepartamento(professorDto.getDepartamento());
+        
         professorCon.salva(professor);
         return ResponseEntity.noContent().build();
+    }
+    
+    @GetMapping ("/servico/dirgrad/registraprovidencia")
+    public ResponseEntity registraProvidencia(@RequestBody CriaRequerimentoDTO provDto) throws ParseException {
+        
+        if(professorReg.criaRequerimento(provDto.getDataInicio(),
+                provDto.getDataFim(),
+                provDto.getProfessor(),
+                provDto.getDisciplina(),
+                provDto.getFalta())) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(500).build();
+        }
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class ChefiaRegras {
     // Método chamado pelo professor que solicita um plano
-    public void estabelecerPlano(Professor professor, Requerimento requerimento) throws ParseException{
+    public boolean estabelecerPlano(Professor professor, Requerimento requerimento) throws ParseException{
         ProfessorRegras profRegras = new ProfessorRegras();
         
         if(requerimento.getTipo().equals(Tipo.MENOR_15)) {
@@ -42,10 +42,12 @@ public class ChefiaRegras {
             
             Factory.requerimentoControle.salva(requerimento);
         }
+        
+        return true;
 
     }
 
-    public void avaliar(Requerimento requerimento){
+    public boolean avaliar(Requerimento requerimento){
         boolean aprovacao = true; //dado recebido do usuario
         
         if (aprovacao) {
@@ -54,11 +56,15 @@ public class ChefiaRegras {
         } else {
             requerimento.setAprovado(false);
         }
+        
+        return true;
     }
     
-    public void relatorioDirgrad(Dirgrad dirgrad, Chefia chefia) {
+    public boolean relatorioDirgrad(Dirgrad dirgrad, Chefia chefia) {
         List<Professor> professoresFaltantes = Factory.professorControle.listaProfessoresFaltantes();
         
         Factory.relatorioControle.salva(professoresFaltantes, dirgrad, chefia);
+        
+        return true;
     }  
 }

@@ -6,7 +6,10 @@
 package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.Servico;
 
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle.DirgradControle;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto.DirgradDTO;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto.DirgradProvidenciaDTO;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Dirgrad;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.regrasdenegocio.DirgradRegras;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +28,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DirgradServico {
     private final DirgradControle dirgradCon;
+    private final DirgradRegras dirgradReg;
     
     @Autowired
-    public DirgradServico(DirgradControle dirgradCon) {
+    public DirgradServico(DirgradControle dirgradCon, DirgradRegras dirgradReg) {
         this.dirgradCon = dirgradCon;
+        this.dirgradReg = dirgradReg;
     }
     
     @GetMapping ("/servico/dirgrad")
@@ -47,7 +52,10 @@ public class DirgradServico {
     }
     
     @PostMapping ("/servico/dirgrad")
-    public ResponseEntity<Dirgrad> criar(@RequestBody Dirgrad dirgrad) {
+    public ResponseEntity<Dirgrad> criar(@RequestBody DirgradDTO dirgradDto) {
+        
+        Dirgrad dirgrad = new Dirgrad();
+        
         dirgradCon.salva(dirgrad);
         return ResponseEntity.status(201).body(dirgrad);
     }
@@ -64,13 +72,27 @@ public class DirgradServico {
     }
     
     @PutMapping ("/servico/dirgrad/{id}")
-    public ResponseEntity alterar(@PathVariable Long id, @RequestBody Dirgrad dirgrad) {
+    public ResponseEntity alterar(@PathVariable Long id, @RequestBody DirgradDTO dirgradDto) {
         Dirgrad d = dirgradCon.listaPorId(id);
         if (d == null) {
             return ResponseEntity.notFound().build();
         }
         
+        Dirgrad dirgrad = new Dirgrad();
+        
         dirgradCon.salva(dirgrad);
         return ResponseEntity.noContent().build();
+    }
+    
+    @GetMapping ("/servico/dirgrad/registraprovidencia")
+    public ResponseEntity registraProvidencia(@RequestBody DirgradProvidenciaDTO provDto) {
+        
+        if(dirgradReg.registraProvidencia(provDto.getRelatorio(),
+                                        provDto.getObservacao(), 
+                                        provDto.getProvidencia())) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(500).build();
+        }
     }
 }

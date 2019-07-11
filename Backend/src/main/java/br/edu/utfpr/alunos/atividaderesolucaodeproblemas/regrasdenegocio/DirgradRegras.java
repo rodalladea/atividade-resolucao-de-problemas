@@ -14,10 +14,12 @@ import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.Relatorio;
  */
 public class DirgradRegras {
     
-    public void registraProvidencia(Relatorio relatorio, String observacao, String providencia) {
+    public boolean registraProvidencia(Relatorio relatorio, String observacao, String providencia) {
         relatorio.setObservacao(observacao);
         relatorio.setProvidencia(providencia);
         
         Factory.relatorioControle.salva(relatorio);
+        
+        return true;
     }
 }

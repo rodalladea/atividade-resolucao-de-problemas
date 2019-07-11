@@ -3,14 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade;
+package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,15 +14,10 @@ import lombok.NoArgsConstructor;
  *
  * @author rodrigo
  */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-public class Dirgrad implements Serializable{
-    
-    @Id @GeneratedValue
+public class DirgradDTO {
     private Long id;
-
 }

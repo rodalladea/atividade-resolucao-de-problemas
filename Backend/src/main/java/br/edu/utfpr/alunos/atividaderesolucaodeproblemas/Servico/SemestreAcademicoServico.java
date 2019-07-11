@@ -6,6 +6,7 @@
 package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.Servico;
 
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.controle.SemestreAcademicoControle;
+import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto.SemestreAcademicoDTO;
 import br.edu.utfpr.alunos.atividaderesolucaodeproblemas.entidade.SemestreAcademico;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,14 @@ public class SemestreAcademicoServico {
     }
     
     @PostMapping ("/servico/semestreAcademico")
-    public ResponseEntity<SemestreAcademico> criar(@RequestBody SemestreAcademico semestreAcademico) {
-        semestreAcademicoCon.salva(semestreAcademico);
-        return ResponseEntity.status(201).body(semestreAcademico);
+    public ResponseEntity<SemestreAcademico> criar(@RequestBody SemestreAcademicoDTO semestreDto) {
+        SemestreAcademico semestre = new SemestreAcademico();
+        
+        semestre.setDataInicio(semestreDto.getDataInicio());
+        semestre.setDataFinal(semestreDto.getDataFinal());
+        
+        semestreAcademicoCon.salva(semestre);
+        return ResponseEntity.status(201).body(semestre);
     }
     
     @DeleteMapping ("/servico/semestreAcademico/{id}")
@@ -64,13 +70,18 @@ public class SemestreAcademicoServico {
     }
     
     @PutMapping ("/servico/semestreAcademico/{id}")
-    public ResponseEntity alterar(@PathVariable Long id, @RequestBody SemestreAcademico semestreAcademico) {
+    public ResponseEntity alterar(@PathVariable Long id, @RequestBody SemestreAcademicoDTO semestreDto) {
         SemestreAcademico a = semestreAcademicoCon.listaPorId(id);
         if (a == null) {
             return ResponseEntity.notFound().build();
         }
         
-        semestreAcademicoCon.salva(semestreAcademico);
+        SemestreAcademico semestre = new SemestreAcademico();
+        
+        semestre.setDataInicio(semestreDto.getDataInicio());
+        semestre.setDataFinal(semestreDto.getDataFinal());
+        
+        semestreAcademicoCon.salva(semestre);
         return ResponseEntity.noContent().build();
     }
 }
