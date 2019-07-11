@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Gerencia Dirgrad</title>
+    <title>Gerencia Chefia</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
@@ -22,18 +22,20 @@
 <body>
     <div class="container">
         <div class="jumbotron">
-            <h1>Gerenciamento de Dirgrad</h1>
-            <p>Essa página é responsável por fazer o geranciamento de dirgrads. </p>
+            <h1>Gerenciamento de Chefia</h1>
+            <p>Essa página é responsável por fazer o geranciamento de chefias. </p>
         </div>
         <div class="row">
             <div class="col">
-                <form action="/dirgrad/criar" method="post">
+                <form action="/chefia/criar" method="post">
                     <div class="form-group">
-                        <label for="id">Identificador:</label>
-                        <input value="${(dirgradAtual.id)!}" name="id" type="number" class="form-control" id="id">
+                        <label for="departamento">Departamento:</label>
+                        <input value="${(chefiaAtual.departamento)!}" name="departamento" type="text" class="form-control" id="departamento">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Criar</button>
+                    <input type="hidden" name="id" value="${(chefiaAtual.id)!}">
+
+                    <button type="submit" class="btn btn-primary">Alterar</button>
                 </form>
 
             </div>
@@ -43,16 +45,16 @@
                 <table class="table table-striped table-hover">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Id do Dirgrad</th>
+                            <th>Departamento</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <#list dirgrads as dirgrad>
+                        <#list chefias as chefia>
                             <tr>
-                                <td>${dirgrad.id}</td>
+                                <td>${chefia.nome}</td>
                                 <td>
-                                    <a href="/dirgrad/prepara-alterar?id=${dirgrad.id}">Alterar</a>
-                                    <a href="/dirgrad/excluir?id=${dirgrad.id}">Excluir</a>
+                                    <a href="/chefia/prepara-alterar?id=${chefia.id}">Alterar</a>
+                                    <a href="/chefia/excluir?id=${chefia.id}">Excluir</a>
                                 </td>
                             </tr>        
                         </#list>

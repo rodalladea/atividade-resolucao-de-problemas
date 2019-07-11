@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Gerencia Dirgrad</title>
+    <title>Gerencia Professor</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
@@ -22,18 +22,24 @@
 <body>
     <div class="container">
         <div class="jumbotron">
-            <h1>Gerenciamento de Dirgrad</h1>
-            <p>Essa página é responsável por fazer o geranciamento de dirgrads. </p>
+            <h1>Gerenciamento de Professor</h1>
+            <p>Essa página é responsável por fazer o geranciamento de professores. </p>
         </div>
         <div class="row">
             <div class="col">
-                <form action="/dirgrad/criar" method="post">
+                <form action="/professor/criar" method="post">
                     <div class="form-group">
-                        <label for="id">Identificador:</label>
-                        <input value="${(dirgradAtual.id)!}" name="id" type="number" class="form-control" id="id">
+                        <label for="faltas">Número de faltas:</label>
+                        <input value="${(professorAtual.faltas)!}" name="faltas" type="number" class="form-control" id="faltas">
+                    </div>
+                    <div class="form-group">
+                        <label for="departamento">Departamento:</label>
+                        <input value="${(professorAtual.departamento)!}"  name="departamento" type="text" class="form-control" id="departamento">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Criar</button>
+                    <input type="hidden" name="id" value="${(professorAtual.id)!}">
+
+                    <button type="submit" class="btn btn-primary">Alterar</button>
                 </form>
 
             </div>
@@ -43,16 +49,18 @@
                 <table class="table table-striped table-hover">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Id do Dirgrad</th>
+                            <th>Faltas</th>
+                            <th>Departamento</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <#list dirgrads as dirgrad>
+                        <#list professores as professor>
                             <tr>
-                                <td>${dirgrad.id}</td>
+                                <td>${professor.faltas}</td>
+                                <td>${professor.departamento}</td>
                                 <td>
-                                    <a href="/dirgrad/prepara-alterar?id=${dirgrad.id}">Alterar</a>
-                                    <a href="/dirgrad/excluir?id=${dirgrad.id}">Excluir</a>
+                                    <a href="/professor/prepara-alterar?id=${professor.id}">Alterar</a>
+                                    <a href="/professor/excluir?id=${professor.id}">Excluir</a>
                                 </td>
                             </tr>        
                         </#list>

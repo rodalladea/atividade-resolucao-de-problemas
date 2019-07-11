@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Gerencia Dirgrad</title>
+    <title>Gerencia Aluno</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
@@ -22,18 +22,26 @@
 <body>
     <div class="container">
         <div class="jumbotron">
-            <h1>Gerenciamento de Dirgrad</h1>
-            <p>Essa página é responsável por fazer o geranciamento de dirgrads. </p>
+            <h1>Gerenciamento de Aluno</h1>
+            <p>Essa página é responsável por fazer o geranciamento de alunos. </p>
         </div>
         <div class="row">
             <div class="col">
-                <form action="/dirgrad/criar" method="post">
+                <form action="/aluno/criar" method="post">
                     <div class="form-group">
-                        <label for="id">Identificador:</label>
-                        <input value="${(dirgradAtual.id)!}" name="id" type="number" class="form-control" id="id">
+                        <label for="porcentagemPresenca">Porcentagem de presença:</label>
+                        <input value="${(alunoAtual.porcentagemPresenca)!}" name="porcentagemPresenca" type="text" class="form-control" id="porcentagemPresenca">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Criar</button>
+                    <#--  Deixei comentado por não sei se precisa  -->
+                    <#--  <div class="form-group">
+                        <label for="disciplinas">Disciplina</label>
+                        <input value="${(alunoAtual.disciplinas)!}"  name="disciplinas" type="text" class="form-control" id="disciplinas">
+                    </div>  -->
+
+                    <input type="hidden" name="id" value="${(alunoAtual.id)!}">
+
+                    <button type="submit" class="btn btn-primary">Alterar aluno</button>
                 </form>
 
             </div>
@@ -43,16 +51,18 @@
                 <table class="table table-striped table-hover">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Id do Dirgrad</th>
+                            <th>Porcentagem de de presença</th>
+                            <#--  <th>Disciplina</th>  -->
                         </tr>
                     </thead>
                     <tbody>
-                        <#list dirgrads as dirgrad>
+                        <#list alunos as aluno>
                             <tr>
-                                <td>${dirgrad.id}</td>
+                                <td>${aluno.nome}</td>
+                                <td>${aluno.disciplinas}</td>
                                 <td>
-                                    <a href="/dirgrad/prepara-alterar?id=${dirgrad.id}">Alterar</a>
-                                    <a href="/dirgrad/excluir?id=${dirgrad.id}">Excluir</a>
+                                    <a href="/aluno/prepara-alterar?id=${aluno.id}">Alterar</a>
+                                    <a href="/aluno/excluir?id=${aluno.id}">Excluir</a>
                                 </td>
                             </tr>        
                         </#list>
