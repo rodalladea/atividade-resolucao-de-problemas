@@ -33,7 +33,9 @@
                         <input value="${(dirgradAtual.id)!}" name="id" type="number" class="form-control" id="id">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Criar</button>
+                    <input type="hidden" name="id" value="${(dirgradAtual.id)!}">
+
+                    <button type="submit" class="btn btn-primary">Alterar</button>
                 </form>
 
             </div>
