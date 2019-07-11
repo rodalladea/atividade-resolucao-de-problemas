@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto;
+package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.model.up;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -19,11 +19,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RelatorioDTO {
+public class DisciplinaDTO {
     private Long id;
-    private List<Long> professoresId;
-    private Long chefiaId;
-    private Long dirgradId;
-    private String observacao;
-    private String providencia;
+    private String nome;
+    private Long semestreId;
+    private Long professorId;
+    private List<Long> alunosMatriculadosId;
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.dto;
+package br.edu.utfpr.alunos.atividaderesolucaodeproblemas.model.up;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AvaliarDTO {
-    private Long chefiaId;
-    private Long dirgradId;
+public class DirgradDTO {
+    private Long id;
 }
